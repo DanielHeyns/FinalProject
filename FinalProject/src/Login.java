@@ -81,7 +81,7 @@ public class Login {
 		
 		JLabel lblPassword = new JLabel("Password:\r\n");
 		lblPassword.setFont(new Font("Times New Roman", Font.PLAIN, 20));
-		lblPassword.setBounds(134, 93, 85, 20);
+		lblPassword.setBounds(131, 95, 85, 20);
 		loginP.add(lblPassword);
 		
 		//field to receive password
