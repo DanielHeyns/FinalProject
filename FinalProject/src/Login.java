@@ -17,8 +17,10 @@ import javax.swing.JPasswordField;
 public class Login {
 
 	private JFrame frmLogin;
-	private JTextField textField;
-	private JPasswordField textField_1;
+	//receive ID
+	private JTextField textFieldID;
+	//receive password
+	private JPasswordField textFieldPass;
 
 	/**
 	 * Launch the application.
@@ -54,35 +56,38 @@ public class Login {
 		frmLogin.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmLogin.getContentPane().setLayout(new BorderLayout(0, 0));
 		
-		JPanel panel_2 = new JPanel();
-		frmLogin.getContentPane().add(panel_2, BorderLayout.SOUTH);
+		JPanel buttonP = new JPanel();
+		frmLogin.getContentPane().add(buttonP, BorderLayout.SOUTH);
 		
-		JButton btnNewButton = new JButton("Login");
-		btnNewButton.setFont(new Font("Times New Roman", Font.PLAIN, 20));
-		panel_2.add(btnNewButton);
+		//button to log in
+		JButton btnLogin = new JButton("Login");
+		btnLogin.setFont(new Font("Times New Roman", Font.PLAIN, 20));
+		buttonP.add(btnLogin);
 		
-		JPanel panel = new JPanel();
-		frmLogin.getContentPane().add(panel, BorderLayout.CENTER);
-		panel.setLayout(null);
+		JPanel loginP = new JPanel();
+		frmLogin.getContentPane().add(loginP, BorderLayout.CENTER);
+		loginP.setLayout(null);
 		
 		JLabel lblId = new JLabel("ID:");
 		lblId.setFont(new Font("Times New Roman", Font.PLAIN, 20));
 		lblId.setBounds(189, 54, 69, 20);
-		panel.add(lblId);
+		loginP.add(lblId);
 		
-		textField = new JTextField();
-		textField.setBounds(219, 51, 146, 26);
-		panel.add(textField);
-		textField.setColumns(10);
+		//text field to receive the id of the login
+		textFieldID = new JTextField();
+		textFieldID.setBounds(219, 51, 146, 26);
+		loginP.add(textFieldID);
+		textFieldID.setColumns(10);
 		
 		JLabel lblPassword = new JLabel("Password:\r\n");
 		lblPassword.setFont(new Font("Times New Roman", Font.PLAIN, 20));
 		lblPassword.setBounds(134, 93, 85, 20);
-		panel.add(lblPassword);
+		loginP.add(lblPassword);
 		
-		textField_1 = new JPasswordField();
-		textField_1.setBounds(219, 93, 146, 26);
-		panel.add(textField_1);
-		textField_1.setColumns(10);
+		//field to receive password
+		textFieldPass = new JPasswordField();
+		textFieldPass.setBounds(219, 93, 146, 26);
+		loginP.add(textFieldPass);
+		textFieldPass.setColumns(10);
 	}
 }

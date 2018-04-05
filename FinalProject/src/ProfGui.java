@@ -64,15 +64,16 @@ public class ProfGui {
 		frmCourseWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmCourseWindow.getContentPane().setLayout(new BorderLayout(0, 0));
 		
-		JPanel panel = new JPanel();
-		frmCourseWindow.getContentPane().add(panel, BorderLayout.NORTH);
-		GridBagLayout gbl_panel = new GridBagLayout();
-		gbl_panel.columnWidths = new int[] {30, 30, 10, 10, 10};
-		gbl_panel.rowHeights = new int[] {10, 10, 10};
-		gbl_panel.columnWeights = new double[]{0.0, 0.0, 0.0, 1.0, Double.MIN_VALUE};
-		gbl_panel.rowWeights = new double[]{0.0, 0.0, Double.MIN_VALUE};
-		panel.setLayout(gbl_panel);
-		panel.setBorder(new EmptyBorder(40, 10, 10, 10));
+		//panel containing the name and id of the professor logged in
+		JPanel topP = new JPanel();
+		frmCourseWindow.getContentPane().add(topP, BorderLayout.NORTH);
+		GridBagLayout gbl_topP = new GridBagLayout();
+		gbl_topP.columnWidths = new int[] {30, 30, 10, 10, 10};
+		gbl_topP.rowHeights = new int[] {10, 10, 10};
+		gbl_topP.columnWeights = new double[]{0.0, 0.0, 0.0, 1.0, Double.MIN_VALUE};
+		gbl_topP.rowWeights = new double[]{0.0, 0.0, Double.MIN_VALUE};
+		topP.setLayout(gbl_topP);
+		topP.setBorder(new EmptyBorder(40, 10, 10, 10));
 		
 		JLabel lblName = new JLabel("Name:");
 		GridBagConstraints gbc_lblName = new GridBagConstraints();
@@ -80,7 +81,7 @@ public class ProfGui {
 		gbc_lblName.insets = new Insets(0, 0, 5, 5);
 		gbc_lblName.gridx = 2;
 		gbc_lblName.gridy = 0;
-		panel.add(lblName, gbc_lblName);
+		topP.add(lblName, gbc_lblName);
 		
 		textField = new JTextField();
 		textField.setEditable(false);
@@ -89,7 +90,7 @@ public class ProfGui {
 		gbc_textField.insets = new Insets(0, 0, 5, 0);
 		gbc_textField.gridx = 3;
 		gbc_textField.gridy = 0;
-		panel.add(textField, gbc_textField);
+		topP.add(textField, gbc_textField);
 		textField.setColumns(10);
 		
 		JLabel lblId = new JLabel("ID:");
@@ -98,7 +99,7 @@ public class ProfGui {
 		gbc_lblId.insets = new Insets(0, 0, 0, 5);
 		gbc_lblId.gridx = 2;
 		gbc_lblId.gridy = 1;
-		panel.add(lblId, gbc_lblId);
+		topP.add(lblId, gbc_lblId);
 		
 		textField_1 = new JTextField();
 		textField_1.setEditable(false);
@@ -106,113 +107,122 @@ public class ProfGui {
 		gbc_textField_1.anchor = GridBagConstraints.WEST;
 		gbc_textField_1.gridx = 3;
 		gbc_textField_1.gridy = 1;
-		panel.add(textField_1, gbc_textField_1);
+		topP.add(textField_1, gbc_textField_1);
 		textField_1.setColumns(10);
-		
 		ImageIcon image1 = new ImageIcon(getClass().getResource("simple.jpg"));
 		JLabel image1label = new JLabel(image1);
 		GridBagConstraints gbc_image1label = new GridBagConstraints();
 		gbc_image1label.gridx = 4;
 		gbc_image1label.gridy = 1;
-		panel.add(image1label, gbc_image1label);
+		topP.add(image1label, gbc_image1label);
 		
-		JPanel panel_1 = new JPanel();
-		frmCourseWindow.getContentPane().add(panel_1, BorderLayout.SOUTH);
-		panel_1.setLayout(new GridLayout(1, 0, 0, 0));
+		//bottom panel where the buttons to make the center panel change between its 3 possible panels
+		JPanel bottomP = new JPanel();
+		frmCourseWindow.getContentPane().add(bottomP, BorderLayout.SOUTH);
+		bottomP.setLayout(new GridLayout(1, 0, 0, 0));
 		
 		JButton btnGoToCur = new JButton("Go To Courses");
-		panel_1.add(btnGoToCur);
+		bottomP.add(btnGoToCur);
 		
-		JButton btnNewButton = new JButton("Go To Students");
-		panel_1.add(btnNewButton);
+		JButton btnGoToStu = new JButton("Go To Students");
+		bottomP.add(btnGoToStu);
 		
-		JButton btnNewButton_1 = new JButton("Go To Assignments");
-		panel_1.add(btnNewButton_1);
+		JButton btnGoToAssign = new JButton("Go To Assignments");
+		bottomP.add(btnGoToAssign);
 		
-		JPanel panel_2 = new JPanel();
-		frmCourseWindow.getContentPane().add(panel_2, BorderLayout.CENTER);
-		panel_2.setLayout(new CardLayout(0, 0));
+		//center panel that will switch between three panels as buttons in the bottom panel are pushed
+		JPanel centerP = new JPanel();
+		frmCourseWindow.getContentPane().add(centerP, BorderLayout.CENTER);
+		centerP.setLayout(new CardLayout(0, 0));
 		
-		JPanel panel_3 = new JPanel();
-		panel_2.add(panel_3, "name_1526742415187808");
-		panel_3.setLayout(null);
+		//courses panel for the center panel
+		JPanel coursesP = new JPanel();
+		centerP.add(coursesP, "name_1526742415187808");
+		coursesP.setLayout(null);
 		
-		JList<String> list = new JList<String>();
-		list.setBackground(Color.WHITE);
-		list.setForeground(Color.DARK_GRAY);
+		//list where all the courses will be listed
+		JList<String> cList = new JList<String>();
+		cList.setBackground(Color.WHITE);
+		cList.setForeground(Color.DARK_GRAY);
 		String [] names = new String[2];
 		names[0] = "Default1";
 		names[1] = "Default2";
-		list.setBounds(131, 58, 351, 207);
-		panel_3.add(list);
-		list.setListData(names);
+		cList.setBounds(131, 58, 351, 207);
+		coursesP.add(cList);
+		cList.setListData(names);
 		
-		JButton btnNewButton_2 = new JButton("New Course");
-		btnNewButton_2.setBounds(546, 86, 152, 37);
-		panel_3.add(btnNewButton_2);
+		JButton btnNewCourse = new JButton("New Course");
+		btnNewCourse.setBounds(546, 86, 152, 37);
+		coursesP.add(btnNewCourse);
 		
-		JButton btnNewButton_3 = new JButton("Set Active");
-		btnNewButton_3.setBounds(546, 152, 152, 37);
-		panel_3.add(btnNewButton_3);
+		JButton btnSetActive = new JButton("Set Active");
+		btnSetActive.setBounds(546, 152, 152, 37);
+		coursesP.add(btnSetActive);
 		
 		JLabel lblCourses = new JLabel("Courses:");
 		lblCourses.setBounds(131, 32, 69, 20);
-		panel_3.add(lblCourses);
+		coursesP.add(lblCourses);
 		
-		JPanel panel_4 = new JPanel();
-		panel_2.add(panel_4, "name_1526746518113682");
-		panel_4.setLayout(null);
+		//students panel for he center panel
+		JPanel studentsP = new JPanel();
+		centerP.add(studentsP, "name_1526746518113682");
+		studentsP.setLayout(null);
 		
-		JComboBox comboBox = new JComboBox();
+		//combo box that will be used to select a course for searching and enrollment/unenrollment
+		JComboBox<String> comboBox = new JComboBox<String>();
 		comboBox.setBounds(160, 33, 189, 26);
-		panel_4.add(comboBox);
+		studentsP.add(comboBox);
 		
-		JList list_1 = new JList();
-		list_1.setBounds(160, 88, 299, 194);
-		panel_4.add(list_1);
+		//list of students
+		JList<String> sList = new JList<String>();
+		sList.setBounds(160, 88, 299, 194);
+		studentsP.add(sList);
 		
 		JRadioButton rdbtnAll = new JRadioButton("All");
 		rdbtnAll.setBounds(574, 85, 155, 29);
-		panel_4.add(rdbtnAll);
+		studentsP.add(rdbtnAll);
 		
 		JRadioButton rdbtnInCourse = new JRadioButton("In Course");
 		rdbtnInCourse.setBounds(574, 122, 155, 29);
-		panel_4.add(rdbtnInCourse);
+		studentsP.add(rdbtnInCourse);
 		
 		JButton btnSearch = new JButton("Search");
 		btnSearch.setBounds(574, 163, 115, 29);
-		panel_4.add(btnSearch);
+		studentsP.add(btnSearch);
 		
 		JButton btnReset = new JButton("Reset");
 		btnReset.setBounds(574, 207, 115, 29);
-		panel_4.add(btnReset);
+		studentsP.add(btnReset);
 		
-		JButton btnNewButton_4 = new JButton("Enroll\r\n");
-		btnNewButton_4.setBounds(514, 252, 115, 29);
-		panel_4.add(btnNewButton_4);
+		JButton btnEnroll = new JButton("Enroll\r\n");
+		btnEnroll.setBounds(514, 252, 115, 29);
+		studentsP.add(btnEnroll);
 		
 		JButton btnUnenroll = new JButton("Unenroll");
 		btnUnenroll.setBounds(648, 253, 115, 29);
-		panel_4.add(btnUnenroll);
+		studentsP.add(btnUnenroll);
 		
-		JPanel panel_5 = new JPanel();
-		panel_2.add(panel_5, "name_1526748614009756");
-		panel_5.setLayout(null);
+		//Assignment panel for the center panel
+		JPanel assignP = new JPanel();
+		centerP.add(assignP, "name_1526748614009756");
+		assignP.setLayout(null);
 		
-		JComboBox comboBox_1 = new JComboBox();
+		//combo box to select the desired course to view assignments for
+		JComboBox<String> comboBox_1 = new JComboBox<String>();
 		comboBox_1.setBounds(156, 38, 193, 26);
-		panel_5.add(comboBox_1);
+		assignP.add(comboBox_1);
 		
-		JList list_2 = new JList();
-		list_2.setBounds(156, 90, 296, 192);
-		panel_5.add(list_2);
+		//list of assignments in selected course
+		JList<String> aList = new JList<String>();
+		aList.setBounds(156, 90, 296, 192);
+		assignP.add(aList);
 		
 		JButton btnUpload = new JButton("Upload");
 		btnUpload.setBounds(592, 103, 115, 29);
-		panel_5.add(btnUpload);
+		assignP.add(btnUpload);
 		
 		JButton btnActivate = new JButton("Activate");
 		btnActivate.setBounds(592, 161, 115, 29);
-		panel_5.add(btnActivate);
+		assignP.add(btnActivate);
 	}
 }
