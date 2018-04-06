@@ -19,11 +19,6 @@ public class DBHelper {
 		}
 	}
 
-	public static void main(String args[]) throws SQLException {
-		DBHelper easy = new DBHelper();
-		easy.removeGrade(13);
-	}
-
 	public void addAssignment(int id, int cid, String title, String path, String duedate) {
 		boolean b = false;
 		String sql = "INSERT INTO assignmenttable (id, courseID, title, path, active, dueDate) VALUES ('"
@@ -61,7 +56,7 @@ public class DBHelper {
 	public void addCourse(int id, int pid, String name) {
 		boolean b = false;
 		String sql = "INSERT INTO coursetable (id, profID, name, active) VALUES ('" + Integer.toString(id) + "', '"
-				+ Integer.toString(pid) + "', '" + name + "',"+ b + ")";
+				+ Integer.toString(pid) + "', '" + name + "'," + b + ")";
 		try {
 			statement = jdbc_connection.createStatement();
 			statement.executeUpdate(sql);
@@ -93,8 +88,8 @@ public class DBHelper {
 
 	public void addGrade(int id, int aid, int sid, int cid, int grade) {
 		String sql = "INSERT INTO gradetable (id, assignID, studentID, courseID, assignmentGrade) VALUES ('"
-				+ Integer.toString(id) + "', '" + Integer.toString(aid) + "', '" + Integer.toString(sid) + "', '" + Integer.toString(cid) + "', '"
-				+ Integer.toString(grade) + "')";
+				+ Integer.toString(id) + "', '" + Integer.toString(aid) + "', '" + Integer.toString(sid) + "', '"
+				+ Integer.toString(cid) + "', '" + Integer.toString(grade) + "')";
 		try {
 			statement = jdbc_connection.createStatement();
 			statement.executeUpdate(sql);
@@ -112,4 +107,83 @@ public class DBHelper {
 			e.printStackTrace();
 		}
 	}
+
+	public void addEnrollment(int id, int sid, int cid) {
+		String sql = "INSERT INTO studentenrollmenttable (id, studentID, courseID) VALUES ('" + Integer.toString(id)
+				+ "', '" + Integer.toString(sid) + "', '" + Integer.toString(cid) + "')";
+		try {
+			statement = jdbc_connection.createStatement();
+			statement.executeUpdate(sql);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void removeEnrollment(int id) {
+		String sql = "DELETE FROM studentenrollmenttable WHERE id = '" + Integer.toString(id) + "'";
+		try {
+			statement = jdbc_connection.createStatement();
+			statement.executeUpdate(sql);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void addSubmission(int id, int aid, int sid, String path, String title, int grade, String comment,
+			String timestamp) {
+		String sql = "INSERT INTO submissiontable (id, assignID, studentID, path, title, submissionGrade, comments, timestamp) VALUES ('"
+				+ Integer.toString(id) + "', '" + Integer.toString(aid) + "', '" + Integer.toString(sid) + "', '" + path
+				+ "', '" + title + "', '" + Integer.toString(grade) + "', '" + comment + "', '" + timestamp + "')";
+		try {
+			statement = jdbc_connection.createStatement();
+			statement.executeUpdate(sql);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void gradeSubmission(int id, int grade) {
+		String sql = "UPDATE submissiontable SET submissionGrade = " + grade + " WHERE id = '" + Integer.toString(id)
+				+ "'";
+		try {
+			statement = jdbc_connection.createStatement();
+			statement.executeUpdate(sql);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void removeSubmission(int id) {
+		String sql = "DELETE FROM submissiontable WHERE id = '" + Integer.toString(id) + "'";
+		try {
+			statement = jdbc_connection.createStatement();
+			statement.executeUpdate(sql);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void addUser(int id, String pass, String email, String fname, String lname, char t) {
+		String sql = "INSERT INTO usertable (id, password, email, firstName, lastName, type) VALUES ('"
+				+ Integer.toString(id) + "', '" + pass + "', '" + email + "', '" + fname + "', '" + lname + "', '" + t
+				+ "')";
+		try {
+			statement = jdbc_connection.createStatement();
+			statement.executeUpdate(sql);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+	}
+
+	public void removeUser(int id) {
+		String sql = "DELETE FROM usertable WHERE id = '" + Integer.toString(id) + "'";
+		try {
+			statement = jdbc_connection.createStatement();
+			statement.executeUpdate(sql);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
 }
