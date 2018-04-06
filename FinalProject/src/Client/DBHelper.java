@@ -1,4 +1,4 @@
-package client;
+package Client;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -6,7 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import objects.*;
+import Objects.*;
 
 public class DBHelper {
 	private Connection jdbc_connection;
@@ -14,7 +14,7 @@ public class DBHelper {
 	private String databaseName = "SchoolDB";
 
 	private String connectioninfo = "jdbc:mysql://localhost:3306/" + databaseName,
-	 							 login = "root", password = "123mysql";
+	 							 login = "root", password = "simple";
 
 	public DBHelper() throws SQLException {
 		try {

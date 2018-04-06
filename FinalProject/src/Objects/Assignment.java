@@ -1,5 +1,4 @@
-package objects;
-import java.util.ArrayList;
+package Objects;
 
 public class Assignment implements java.io.Serializable {
 

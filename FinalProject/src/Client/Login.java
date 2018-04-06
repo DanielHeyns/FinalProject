@@ -1,4 +1,4 @@
-package client;
+package Client;
 import java.awt.EventQueue;
 
 import javax.swing.JOptionPane;
@@ -17,7 +17,7 @@ import javax.swing.JButton;
 import javax.swing.JPasswordField;
 import java.awt.event.*;
 import java.awt.event.ActionEvent;
-import objects.*;
+import Objects.*;
 
 public class Login {
 

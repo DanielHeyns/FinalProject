@@ -1,4 +1,4 @@
-package client;
+package Client;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -19,14 +19,6 @@ public class FileHelper {
 		this.AssignID = Assign;
 	}
 
-	public static void main(String args[]) throws IOException {
-		JFrame frame = new JFrame();
-		frame.setVisible(true);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		FileHelper filehelper = new FileHelper("Easy", "Creazy");
-		filehelper.fileChooserFile(frame);
-	}
-
 	public String fileChooserFile(JFrame frame) throws IOException {
 		JFileChooser chooser = new JFileChooser();
 		chooser.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
@@ -35,20 +27,16 @@ public class FileHelper {
 			File file = chooser.getSelectedFile();
 			String ext = getExtension(chooser.getSelectedFile().getAbsolutePath());
 			File copy = new File("C:\\Assigns\\"+ courseID + "\\" + AssignID + "." +ext);
-			copyFile(file,copy);
 			copy.getParentFile().mkdir();
 			copy.createNewFile();
-			return copy.getPath();
+			copyFile(file,copy);
+			return ("C:/Assigns/"+ courseID + "/" + AssignID + "." +ext);
 		}
 		else
 			return null;
 	}
 
 	public static void copyFile(File sourceFile, File destFile) throws IOException {
-		if (!destFile.exists()) {
-			destFile.createNewFile();
-		}
-
 		FileChannel source = null;
 		FileChannel destination = null;
 

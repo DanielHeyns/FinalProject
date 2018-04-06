@@ -1,4 +1,4 @@
-package objects;
+package Objects;
 import java.util.ArrayList;
 
 public class Student extends User implements java.io.Serializable {
