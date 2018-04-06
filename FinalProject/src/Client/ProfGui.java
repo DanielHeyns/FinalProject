@@ -334,8 +334,18 @@ public class ProfGui {
 			if (e.getSource() == profGUI.btnUpload) {
 				uploadFile();
 			}
+			if (e.getSource() == profGUI.btnSearch) {
+				searchStudents();
+			}
 		}
-		
+		public void searchStudents() {
+			String input = JOptionPane.showInputDialog("Please Enter a LastName or StudentID");
+			if(isInteger(input)) {
+				Student student = client.databaseHelper.voidSearchStudent(Integer.parseInt(input));
+			} else {
+				ArrayList<Student> students = client.databaseHelper.voidSearchStudent(input);
+			}
+		}
 		public void uploadFile() {
 			String coursename = (String) profGUI.comboBox_1.getSelectedItem();
 			String stuff[] = coursename.split(", ");

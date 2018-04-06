@@ -1,4 +1,5 @@
 package Client;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -13,8 +14,7 @@ public class DBHelper {
 	private Statement statement;
 	private String databaseName = "SchoolDB";
 
-	private String connectioninfo = "jdbc:mysql://localhost:3306/" + databaseName,
-	 							 login = "root", password = "simple";
+	private String connectioninfo = "jdbc:mysql://localhost:3306/" + databaseName, login = "root", password = "simple";
 
 	public DBHelper() throws SQLException {
 		try {
@@ -23,30 +23,32 @@ public class DBHelper {
 			System.out.println("Successful Connection to:" + connectioninfo);
 		} catch (SQLException e) {
 			e.printStackTrace();
-		} catch (ClassNotFoundException e ){e.printStackTrace();}
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
 	}
 
-	public Professor checkLogin(int id, String pass)
-	{
+	public Professor checkLogin(int id, String pass) {
 		String sql = "SELECT * FROM usertable WHERE ID = " + id;
 		ResultSet data;
 		try {
 			statement = jdbc_connection.createStatement();
 			data = statement.executeQuery(sql);
-			if(data.next())
-			{ //public Professor(int i,String p, String e, String f, String l)
-				Professor p = new Professor(id, data.getString("password"),
-								data.getString("email"), data.getString("firstName"),
-								data.getString("lastName"));
-				if(!p.samePass(pass)){return null;}
+			if (data.next()) { // public Professor(int i,String p, String e, String f, String l)
+				Professor p = new Professor(id, data.getString("password"), data.getString("email"),
+						data.getString("firstName"), data.getString("lastName"));
+				if (!p.samePass(pass)) {
+					return null;
+				}
 				return p;
 			}
-		} catch (SQLException e) { e.printStackTrace(); }
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 		return null;
 	}
 
-	public Course[] profCourses(Professor p)
-	{
+	public Course[] profCourses(Professor p) {
 		String sql = "SELECT * FROM coursetable WHERE profID = " + p.getId();
 		ResultSet data;
 		try {
@@ -54,18 +56,18 @@ public class DBHelper {
 			data = statement.executeQuery(sql);
 			int i = 0;
 			Course c[] = new Course[5];
-			while(data.next())
-			{ // (int i, String cn, int pi, String pn, boolean a, ArrayList<Integer> arr)
-				c[i++] = new Course(data.getInt("id"), data.getString("name"),
-								p.getId(), p.getFirstName(), data.getBoolean("active"),null);
+			while (data.next()) { // (int i, String cn, int pi, String pn, boolean a, ArrayList<Integer> arr)
+				c[i++] = new Course(data.getInt("id"), data.getString("name"), p.getId(), p.getFirstName(),
+						data.getBoolean("active"), null);
 			}
 			return c;
-		} catch (SQLException e) { e.printStackTrace(); }
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 		return null;
 	}
 
-	public ArrayList<Assignment> profAssigns(int id)
-	{
+	public ArrayList<Assignment> profAssigns(int id) {
 		String sql = "SELECT * FROM assignmenttable WHERE courseID = " + id;
 		ResultSet data;
 		try {
@@ -74,17 +76,16 @@ public class DBHelper {
 			// ctor (int i,int ci, String t, boolean a, String p, String d)
 			// table (id, courseID, title, path, active, dueDate)
 			ArrayList<Assignment> a = new ArrayList<Assignment>();
-			while(data.next())
-			{
-				a.add(new Assignment(data.getInt("id"), data.getInt("courseID"),
-								data.getString("title"),data.getBoolean("active"),
-								 data.getString("path"), data.getString("duedate")));
+			while (data.next()) {
+				a.add(new Assignment(data.getInt("id"), data.getInt("courseID"), data.getString("title"),
+						data.getBoolean("active"), data.getString("path"), data.getString("duedate")));
 			}
 			return a;
-		} catch (SQLException e) { e.printStackTrace(); }
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 		return null;
 	}
-
 
 	public void addAssignment(int id, int cid, String title, String path, String duedate) {
 		boolean b = false;
@@ -240,6 +241,45 @@ public class DBHelper {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+
+	}
+
+	public Student voidSearchStudent(int id) {
+		String sql = "SELECT * FROM usertable WHERE id = '" + Integer.toString(id) + "'";
+		try {
+			statement = jdbc_connection.createStatement();
+			ResultSet result = statement.executeQuery(sql);
+			if (!result.first()) {
+				return null;
+			}
+			Student student = new Student(result.getInt("id"), null, result.getString("email"),
+					result.getString("firstName"), result.getString("lastName"));
+			return student;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	public ArrayList<Student> voidSearchStudent(String lname) {
+		String sql = "SELECT * FROM usertable WHERE lastName = '" + lname + "'";
+		try {
+			statement = jdbc_connection.createStatement();
+			ResultSet result = statement.executeQuery(sql);
+			if (!result.first()) {
+				return null;
+			}
+			result.beforeFirst();
+			ArrayList<Student> students = new ArrayList<Student>();
+			while (result.next()) {
+				Student student = new Student(result.getInt("id"), null, result.getString("email"),
+						result.getString("firstName"), result.getString("lastName"));
+				students.add(student);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
 
 	}
 
