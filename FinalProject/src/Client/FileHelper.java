@@ -1,3 +1,4 @@
+package client;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -12,12 +13,12 @@ import javax.swing.JFrame;
 public class FileHelper {
 	private String courseID;
 	private String AssignID;
-	
+
 	public FileHelper(String ID, String Assign) {
 		this.courseID = ID;
 		this.AssignID = Assign;
 	}
-	
+
 	public static void main(String args[]) throws IOException {
 		JFrame frame = new JFrame();
 		frame.setVisible(true);
@@ -64,9 +65,9 @@ public class FileHelper {
 			}
 		}
 	}
-	
+
 	public static String getExtension(String path) {
-		
+
 		String ext[] = path.split("\\.");
 		return ext[1];
 	}
