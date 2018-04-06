@@ -109,12 +109,12 @@ public class ProfGui {
 		gbc_textField_1.gridy = 1;
 		topP.add(textField_1, gbc_textField_1);
 		textField_1.setColumns(10);
-		ImageIcon image1 = new ImageIcon(getClass().getResource("simple.jpg"));
-		JLabel image1label = new JLabel(image1);
-		GridBagConstraints gbc_image1label = new GridBagConstraints();
-		gbc_image1label.gridx = 4;
-		gbc_image1label.gridy = 1;
-		topP.add(image1label, gbc_image1label);
+//		ImageIcon image1 = new ImageIcon(getClass().getResource("simple.jpg"));
+//		JLabel image1label = new JLabel(image1);
+//		GridBagConstraints gbc_image1label = new GridBagConstraints();
+//		gbc_image1label.gridx = 4;
+//		gbc_image1label.gridy = 1;
+//		topP.add(image1label, gbc_image1label);
 		
 		//bottom panel where the buttons to make the center panel change between its 3 possible panels
 		JPanel bottomP = new JPanel();
