@@ -37,7 +37,7 @@ public class FileHelper {
 			copyFile(file,copy);
 			copy.getParentFile().mkdir();
 			copy.createNewFile();
-			return chooser.getSelectedFile().getAbsolutePath();
+			return copy.getPath();
 		}
 		else
 			return null;
