@@ -17,7 +17,7 @@ import javax.swing.JButton;
 import javax.swing.JPasswordField;
 import java.awt.event.*;
 import java.awt.event.ActionEvent;
-import Objects.*;
+import objects.*;
 
 public class Login {
 

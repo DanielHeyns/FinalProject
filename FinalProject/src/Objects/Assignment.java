@@ -1,4 +1,5 @@
 package Objects;
+import java.util.ArrayList;
 
 public class Assignment implements java.io.Serializable {
 
@@ -37,7 +38,7 @@ public class Assignment implements java.io.Serializable {
   public String getDueDate(){return dueDate;}
   public String toString(){
     String str;
-    if(isActive()){str = "true";}else{str = "false";}
+    if(isActive()){str = "active";}else{str = "not active";}
     return id + ", " +  title + ", " + str + ", Due: " + dueDate;
   }
 

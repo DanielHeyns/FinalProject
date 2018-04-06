@@ -4,7 +4,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import Objects.*;
+import objects.*;
 
 public class Client {
 
@@ -39,6 +39,7 @@ Professor professor;
 		professor = p;
 		courses = databaseHelper.profCourses(p);
 		assigns = new ArrayList<Assignment>();
+		students = databaseHelper.getStudents();
 		for(int i = 0; i<courses.length; i++){
 			if(courses[i] == null){break;}
 			assigns.addAll(databaseHelper.profAssigns(courses[i].getId()));
@@ -61,12 +62,28 @@ Professor professor;
 
 	public void activateAssign(int id){
 		databaseHelper.activateAssign(id);
-		for(int i = 0; i<courses.length; i++){
-			if(assigns.get(i).getId() == id){courses[i].activate(); System.out.println("found"); break;}
+		for(int i = 0; i<assigns.size(); i++){
+			if(assigns.get(i).getId() == id){assigns.get(i).activate(); break;}
 		}
 		profGUI.listener.updateAssigns();
 	}
-	
+
+
+	public void enrollStudent(int sid,int cid){
+		databaseHelper.addEnrollment(0,sid,cid);
+		for(int i = 0; i<students.size(); i++){
+			if(students.get(i).getId() == sid){students.get(i).addCourse(cid); break;}
+		}
+		profGUI.listener.updateStudents();
+	}
+
+	public void unenrollStudent(int sid,int cid){
+		databaseHelper.removeEnrollment(sid,cid);
+		for(int i = 0; i<students.size(); i++){
+			if(students.get(i).getId() == sid){students.get(i).removeCourse(cid); break;}
+		}
+		profGUI.listener.updateStudents();
+	}
 	public void uploadFile(Assignment assign) {
 		assigns.add(assign);
 		profGUI.listener.updateAssigns();
