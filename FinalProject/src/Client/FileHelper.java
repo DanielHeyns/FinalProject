@@ -1,4 +1,4 @@
-package Client;
+package client;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -26,11 +26,11 @@ public class FileHelper {
 		if (returnVal == JFileChooser.APPROVE_OPTION) {
 			File file = chooser.getSelectedFile();
 			String ext = getExtension(chooser.getSelectedFile().getAbsolutePath());
-			File copy = new File("C:\\Assigns\\"+ courseID + "\\" + AssignID + "." +ext);
+			File copy = new File("/Users/jesse/Desktop/Assignments/"+ courseID + "/" + AssignID + "." +ext);
 			copy.getParentFile().mkdir();
 			copy.createNewFile();
 			copyFile(file,copy);
-			return ("C:/Assigns/"+ courseID + "/" + AssignID + "." +ext);
+			return ("/Users/jesse/Desktop/Assignments/"+ courseID + "/" + AssignID + "." +ext);
 		}
 		else
 			return null;

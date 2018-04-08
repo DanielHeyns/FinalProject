@@ -1,4 +1,4 @@
-package Client;
+package client;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -271,8 +271,8 @@ public class DBHelper {
 	}
 
 	public void addUser(int id, String pass, String email, String fname, String lname, char t) {
-		String sql = "INSERT INTO usertable (id, password, email, firstName, lastName, type) VALUES ('"
-				+ Integer.toString(id) + "', '" + pass + "', '" + email + "', '" + fname + "', '" + lname + "', '" + t
+		String sql = "INSERT INTO usertable (id, password, email, firstName, lastName, type) VALUES ("
+				+ Integer.toString(id) + ", '" + pass + "', '" + email + "', '" + fname + "', '" + lname + "', '" + t
 				+ "')";
 		try {
 			statement = jdbc_connection.createStatement();
@@ -325,6 +325,7 @@ public class DBHelper {
 							result.getString("firstName"), result.getString("lastName"));
 					students.add(student);
 				}
+				return students;
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}

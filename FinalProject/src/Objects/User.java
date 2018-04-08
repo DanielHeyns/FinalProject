@@ -1,4 +1,4 @@
-package Objects;
+package objects;
 public abstract class User implements java.io.Serializable {
 
   private static final long serialVersionUID = 1L;

@@ -1,4 +1,4 @@
-package Client;
+package client;
 import java.awt.EventQueue;
 
 import javax.swing.JOptionPane;
@@ -71,7 +71,7 @@ public class Login {
 
 		JLabel lblPassword = new JLabel("Password:\r\n");
 		lblPassword.setFont(new Font("Times New Roman", Font.PLAIN, 20));
-		lblPassword.setBounds(131, 95, 85, 20);
+		lblPassword.setBounds(131, 95, 120, 20);
 		loginP.add(lblPassword);
 
 		//field to receive password

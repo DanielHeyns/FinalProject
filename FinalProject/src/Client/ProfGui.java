@@ -1,4 +1,4 @@
-package Client;
+package client;
 import java.awt.EventQueue;
 import java.util.ArrayList;
 
@@ -62,7 +62,6 @@ public class ProfGui {
 	JRadioButton rdbtnInCourse;
 	ButtonGroup rbgroup;
 	JButton btnSearch;
-	JButton btnReset;
 	JButton btnEnroll;
 	JButton btnUnenroll;
 	JComboBox<String> comboBox_1;
@@ -232,11 +231,6 @@ public class ProfGui {
 		btnSearch.addActionListener(listener);
 		studentsP.add(btnSearch);
 
-		btnReset = new JButton("Reset");
-		btnReset.setBounds(574, 207, 115, 29);
-		btnReset.addActionListener(listener);
-		studentsP.add(btnReset);
-
 		btnEnroll = new JButton("Enroll\r\n");
 		btnEnroll.setBounds(514, 252, 115, 29);
 		btnEnroll.addActionListener(listener);
@@ -384,7 +378,7 @@ public class ProfGui {
 				profGUI.sListModel.removeAllElements();
 				profGUI.sListModel.addElement(student.toString());
 			} else {
-				ArrayList<Student> students = client.databaseHelper.voidSearchStudent(input);
+				ArrayList<Student> students = new ArrayList<>(client.databaseHelper.voidSearchStudent(input));
 				profGUI.sListModel.removeAllElements();
 				for(int i = 0; i<students.size(); i++)
 					profGUI.sListModel.addElement(students.get(i).toString());
