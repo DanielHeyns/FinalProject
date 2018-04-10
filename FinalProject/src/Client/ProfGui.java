@@ -417,20 +417,24 @@ public class ProfGui {
 				}
 			}
 		}
-
+		/**
+		 *gets a file from the user and sends it to the client to be sent over a socket to the server.
+		 * @throws IOException
+		 */
 		public void uploadFile() throws IOException {
 			String coursename = (String) profGUI.comboBox_1.getSelectedItem();
 			String stuff[] = coursename.split(", ");
-			String AssignID = JOptionPane.showInputDialog("Please Enter Assignment ID");
+			String AssignID = JOptionPane.showInputDialog("Please Enter Assignment ID");		//Receives assignment id, title and duedate
 			String Assigntitle = JOptionPane.showInputDialog("Please Enter Assignment Title");
 			String AssignDue = JOptionPane.showInputDialog("Please Enter Assignment DueDate");
-			FileHelper filehelp = new FileHelper();
-			byte[] content = filehelp.createByteArray(filehelp.fileChooserFile(frmCourseWindow));
+			FileHelper filehelp = new FileHelper();												//initializes FileHelper
+			byte[] content = filehelp.createByteArray(filehelp.fileChooserFile(frmCourseWindow));//uses two functions from filehelper to get the specified file 
+																								//from the user and converts the file to a byte array
 			try {
-				Assignment assignment = new Assignment(Integer.parseInt(AssignID), Integer.parseInt(stuff[0]),
+				Assignment assignment = new Assignment(Integer.parseInt(AssignID), Integer.parseInt(stuff[0]), //creates an assignment class with the previously gained info
 						Assigntitle, false, null, AssignDue);
-				assignment.setByte(content);
-				client.uploadFile(assignment);
+				assignment.setByte(content);													// adds the byte array to the assignment
+				client.uploadFile(assignment);													// sends the assignment with the byte array to the client to be sent
 			} catch (NumberFormatException e1) {
 				e1.printStackTrace();
 			}

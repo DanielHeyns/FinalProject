@@ -21,7 +21,13 @@ import javax.swing.JFrame;
 import Objects.Assignment;
 
 public class FileHelper {
-
+	
+	/**
+	 * creates a window that can be interacted with by a user to select a file form their system
+	 * @param frame where the window will be presented
+	 * @return the file that the user selected
+	 * @throws IOException when nothing is selected
+	 */
 	public File fileChooserFile(JFrame frame) throws IOException {
 		JFileChooser chooser = new JFileChooser();
 		chooser.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
@@ -33,8 +39,13 @@ public class FileHelper {
 		}
 		return null;
 	}
-
-	public static void copyFile(File sourceFile, File destFile) throws IOException {
+	/**
+	 * copies the contents of one file to another, overwriting all previous data
+	 * @param sourceFile is the file to be copied
+	 * @param destFile is the file to be copied to
+	 * @throws IOException when the source or destfiles could not be found
+	 */
+	private static void copyFile(File sourceFile, File destFile) throws IOException {
 		FileChannel source = null;
 		FileChannel destination = null;
 
@@ -52,12 +63,16 @@ public class FileHelper {
 		}
 	}
 
-	public static String getExtension(String path) {
+	private static String getExtension(String path) {
 
 		String ext[] = path.split("\\.");
 		return ext[1];
 	}
-
+	/**
+	 * converts a file to a byte array
+	 * @param file to be converted
+	 * @return the byte array with the data from the file
+	 */
 	public byte[] createByteArray(File file) {
 		long length = file.length();
 		byte[] content = new byte[(int) length];
@@ -76,10 +91,13 @@ public class FileHelper {
 		return null;
 
 	}
-
-	public File recieveAssign(ObjectInputStream in) {
+	
+	/**
+	 * used to save the assignment file provided to the system that this function is called on
+	 * @param assign the assignment to be saved
+	 */
+	public void saveAssign(Assignment assign) {
 		try {
-			Assignment assign = (Assignment) in.readObject();
 			File file = new File(assign.getTitle());
 			FileOutputStream fileOutputStream = new FileOutputStream(file);
 			fileOutputStream.write(assign.getByte());
@@ -90,13 +108,9 @@ public class FileHelper {
 			copy.getParentFile().mkdir();
 			copy.createNewFile();
 			copyFile(file, copy);
-			return copy;
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		return null;
 	}
 
 }
