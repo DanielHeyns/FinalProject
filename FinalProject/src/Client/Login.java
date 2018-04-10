@@ -17,7 +17,7 @@ import javax.swing.JButton;
 import javax.swing.JPasswordField;
 import java.awt.event.*;
 import java.awt.event.ActionEvent;
-import objects.*;
+import Objects.*;
 
 public class Login {
 
@@ -71,7 +71,7 @@ public class Login {
 
 		JLabel lblPassword = new JLabel("Password:\r\n");
 		lblPassword.setFont(new Font("Times New Roman", Font.PLAIN, 20));
-		lblPassword.setBounds(131, 95, 85, 20);
+		lblPassword.setBounds(132, 95, 90, 20);
 		loginP.add(lblPassword);
 
 		//field to receive password

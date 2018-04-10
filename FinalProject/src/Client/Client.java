@@ -4,7 +4,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import objects.*;
+import Objects.*;
 
 public class Client {
 
@@ -87,7 +87,8 @@ Professor professor;
 	public void uploadFile(Assignment assign) {
 		assigns.add(assign);
 		profGUI.listener.updateAssigns();
-		databaseHelper.addAssignment(assign.getId(), assign.getCourseID(), assign.getTitle(), assign.getPath(), assign.getDueDate());
+	// instead of sending directly to the database here, we need to use FileHelper.sendFile();
+	//	databaseHelper.addAssignment(assign.getId(), assign.getCourseID(), assign.getTitle(), assign.getPath(), assign.getDueDate());
 	}
 
 

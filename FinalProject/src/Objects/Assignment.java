@@ -11,6 +11,7 @@ public class Assignment implements java.io.Serializable {
   private boolean active;
   private String path;
   private String dueDate;
+  private byte[] filebytes;
 
   // ctors
   public Assignment(){
@@ -41,6 +42,7 @@ public class Assignment implements java.io.Serializable {
     if(isActive()){str = "active";}else{str = "not active";}
     return id + ", " +  title + ", " + str + ", Due: " + dueDate;
   }
+  public byte[] getByte() {return filebytes;}
 
   // setters
   public void setId(int i){id = i;}
@@ -50,6 +52,7 @@ public class Assignment implements java.io.Serializable {
   public void setDueDate(String i){dueDate = i;}
   public void activate(){active = true;}
   public void deactivate(){active = false;}
+  public void setByte(byte[] bytes) {filebytes = bytes;}
 
 
 }
