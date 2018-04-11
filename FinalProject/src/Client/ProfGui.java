@@ -72,6 +72,11 @@ public class ProfGui {
 	JButton btnUpload;
 	JButton btnActivate;
 	ProfListener listener;
+	private JList slist;
+	private JLabel lblSubmissions;
+	private JButton btnGrade;
+	private JButton btnDownload;
+	private JButton btnEmailStu;
 
 	/**
 	 * Create the application.
@@ -188,13 +193,17 @@ public class ProfGui {
 		coursesP.add(btnNewCourse);
 
 		btnSetActive = new JButton("Set Active");
-		btnSetActive.setBounds(546, 152, 152, 37);
+		btnSetActive.setBounds(546, 139, 152, 37);
 		btnSetActive.addActionListener(listener);
 		coursesP.add(btnSetActive);
 
 		JLabel lblCourses = new JLabel("Courses:");
 		lblCourses.setBounds(131, 32, 69, 20);
 		coursesP.add(lblCourses);
+		
+		btnEmailStu = new JButton("Email Students");
+		btnEmailStu.setBounds(546, 192, 152, 37);
+		coursesP.add(btnEmailStu);
 
 		// students panel for he center panel
 		JPanel studentsP = new JPanel();
@@ -254,14 +263,14 @@ public class ProfGui {
 		comboBoxModel_1 = new DefaultComboBoxModel();
 		comboBox_1 = new JComboBox<String>();
 		comboBox_1.setModel(comboBoxModel_1);
-		comboBox_1.setBounds(156, 38, 193, 26);
+		comboBox_1.setBounds(32, 47, 193, 26);
 		comboBox_1.addActionListener(listener);
 		assignP.add(comboBox_1);
 
 		// list of assignments in selected course
 		aListModel = new DefaultListModel<String>();
 		aList = new JList<String>(aListModel);
-		aList.setBounds(156, 90, 296, 192);
+		aList.setBounds(32, 89, 296, 192);
 		assignP.add(aList);
 
 		btnUpload = new JButton("Upload");
@@ -270,9 +279,25 @@ public class ProfGui {
 		assignP.add(btnUpload);
 
 		btnActivate = new JButton("Activate");
-		btnActivate.setBounds(592, 161, 115, 29);
+		btnActivate.setBounds(592, 148, 115, 29);
 		btnActivate.addActionListener(listener);
 		assignP.add(btnActivate);
+		
+		slist = new JList();
+		slist.setBounds(343, 89, 239, 192);
+		assignP.add(slist);
+		
+		lblSubmissions = new JLabel("Submissions");
+		lblSubmissions.setBounds(343, 50, 120, 20);
+		assignP.add(lblSubmissions);
+		
+		btnGrade = new JButton("Grade");
+		btnGrade.setBounds(592, 193, 115, 29);
+		assignP.add(btnGrade);
+		
+		btnDownload = new JButton("Download");
+		btnDownload.setBounds(592, 238, 115, 29);
+		assignP.add(btnDownload);
 
 		lWindow = new Login(client, frmCourseWindow);
 	}

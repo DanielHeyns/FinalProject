@@ -10,14 +10,12 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.JTextArea;
 import javax.swing.JButton;
-import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 
 public class EmailMessageWindow {
 
 	 JFrame frmSendEmail;
-	 JTextField textField;
-	 JTextField textField_1;
+	 JTextField tfsubject;
 	 JButton btnSend;
 	
 
@@ -56,21 +54,15 @@ public class EmailMessageWindow {
 		
 		JPanel TopP = new JPanel();
 		frmSendEmail.getContentPane().add(TopP, BorderLayout.NORTH);
-		TopP.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+		TopP.setLayout(new FlowLayout(FlowLayout.LEFT, 5, 5));
 		
-		JLabel lblTo = new JLabel("To:");
-		TopP.add(lblTo);
-		
-		textField = new JTextField();
-		TopP.add(textField);
-		textField.setColumns(10);
 		
 		JLabel lblSubject = new JLabel("Subject:");
 		TopP.add(lblSubject);
 		
-		textField_1 = new JTextField();
-		TopP.add(textField_1);
-		textField_1.setColumns(10);
+		tfsubject = new JTextField();
+		TopP.add(tfsubject);
+		tfsubject.setColumns(10);
 		
 		JPanel messagesendP = new JPanel();
 		frmSendEmail.getContentPane().add(messagesendP, BorderLayout.CENTER);
