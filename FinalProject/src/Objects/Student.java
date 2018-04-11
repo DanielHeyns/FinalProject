@@ -33,7 +33,7 @@ public class Student extends User implements java.io.Serializable {
   public String toString(){ return id + ", " + firstName + ", " + lastName;}
   // course adjustments
   public void addCourse(int cID){courses.add(cID);}
-  public void removeCourse(int cID){courses.remove(cID);}
+  public void removeCourse(int cID){courses.remove((Integer)cID);}
 
 
 }

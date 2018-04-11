@@ -1,3 +1,4 @@
+
 package Client;
 
 import java.awt.EventQueue;
@@ -62,7 +63,6 @@ public class ProfGui {
 	JRadioButton rdbtnInCourse;
 	ButtonGroup rbgroup;
 	JButton btnSearch;
-	JButton btnReset;
 	JButton btnEnroll;
 	JButton btnUnenroll;
 	JComboBox<String> comboBox_1;
@@ -234,11 +234,6 @@ public class ProfGui {
 		btnSearch.setBounds(574, 163, 115, 29);
 		btnSearch.addActionListener(listener);
 		studentsP.add(btnSearch);
-
-		btnReset = new JButton("Reset");
-		btnReset.setBounds(574, 207, 115, 29);
-		btnReset.addActionListener(listener);
-		studentsP.add(btnReset);
 
 		btnEnroll = new JButton("Enroll\r\n");
 		btnEnroll.setBounds(514, 252, 115, 29);

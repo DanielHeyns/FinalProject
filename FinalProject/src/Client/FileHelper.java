@@ -1,19 +1,13 @@
+
 package Client;
 
 import java.io.BufferedInputStream;
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.net.Socket;
 import java.nio.channels.FileChannel;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
@@ -35,7 +29,6 @@ public class FileHelper {
 		if (returnVal == JFileChooser.APPROVE_OPTION) {
 			File file = chooser.getSelectedFile();
 			return file;
-
 		}
 		return null;
 	}
@@ -45,6 +38,7 @@ public class FileHelper {
 	 * @param destFile is the file to be copied to
 	 * @throws IOException when the source or destfiles could not be found
 	 */
+	@SuppressWarnings("resource")
 	private static void copyFile(File sourceFile, File destFile) throws IOException {
 		FileChannel source = null;
 		FileChannel destination = null;

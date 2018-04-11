@@ -1,5 +1,4 @@
 package Client;
-
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -14,7 +13,8 @@ public class DBHelper {
 	private Statement statement;
 	private String databaseName = "SchoolDB";
 
-	private String connectioninfo = "jdbc:mysql://localhost:3306/" + databaseName, login = "root", password = "simple";
+	private String connectioninfo = "jdbc:mysql://localhost:3306/" + databaseName,
+	 							 login = "root", password = "123mysql";
 
 	public DBHelper() throws SQLException {
 		try {
@@ -23,12 +23,11 @@ public class DBHelper {
 			System.out.println("Successful Connection to:" + connectioninfo);
 		} catch (SQLException e) {
 			e.printStackTrace();
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		}
+		} catch (ClassNotFoundException e ){e.printStackTrace();}
 	}
 
-	public Professor checkLogin(int id, String pass) {
+	public Professor checkLogin(int id, String pass)
+	{
 		String sql = "SELECT * FROM usertable WHERE ID = " + id;
 		ResultSet data;
 		try {
@@ -270,8 +269,8 @@ public class DBHelper {
 	}
 
 	public void addUser(int id, String pass, String email, String fname, String lname, char t) {
-		String sql = "INSERT INTO usertable (id, password, email, firstName, lastName, type) VALUES ('"
-				+ Integer.toString(id) + "', '" + pass + "', '" + email + "', '" + fname + "', '" + lname + "', '" + t
+		String sql = "INSERT INTO usertable (id, password, email, firstName, lastName, type) VALUES ("
+				+ Integer.toString(id) + ", '" + pass + "', '" + email + "', '" + fname + "', '" + lname + "', '" + t
 				+ "')";
 		try {
 			statement = jdbc_connection.createStatement();
