@@ -81,36 +81,38 @@ public class Login {
 		textFieldPass.setColumns(10);
 
 		listener = new LoginListener(client,frmLogin, textFieldID, textFieldPass,
-																	btnLogin, f);
+																	btnLogin);
 		btnLogin.addActionListener(listener);
 	}
 
+	// __________________ LoginListener __________________ //
+
+	/**
+	 * A class to listen to the login GUI elements
+	 */
 	public class LoginListener implements ActionListener {
 		private JFrame frame;
 		private Client client;
 		private JTextField idField;
 		private JPasswordField passField;
 		private JButton button;
-		private JFrame profFrame;
 
 	public LoginListener(Client c, JFrame f, JTextField t, JPasswordField p,
-												JButton b, JFrame pf){
-	frame = f; client = c; idField = t; passField = p; button = b; profFrame = pf;
+												JButton b){
+	frame = f; client = c; idField = t; passField = p; button = b;
 	}
+
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == button) {
 			int id = Integer.parseInt(idField.getText().trim());
 			String pass = passField.getText().trim();
-			//System.out.println("id: " + id + "\npass: " + pass);
 			checkLogin(id,pass);
 		}
 	}
 
 	 private void checkLogin(int id, String pass){
-		Professor p = client.databaseHelper.checkLogin(id,pass);
-		if(p != null){
-			profFrame.setVisible(true);
-			client.setUser(p);
+		Boolean check = client.login(id, pass);
+		if(check){
 			frame.setVisible(false);
 		} else {
 			JOptionPane.showMessageDialog(null, "Incorrect ID/Password." +

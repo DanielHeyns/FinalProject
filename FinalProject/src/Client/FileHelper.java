@@ -26,11 +26,11 @@ public class FileHelper {
 		if (returnVal == JFileChooser.APPROVE_OPTION) {
 			File file = chooser.getSelectedFile();
 			String ext = getExtension(chooser.getSelectedFile().getAbsolutePath());
-			File copy = new File("/Users/jesse/Desktop/Assignments/"+ courseID + "/" + AssignID + "." +ext);
+			File copy = new File("C:/Users/Jesse/Desktop/Assignments"+ courseID + "/" + AssignID + "." +ext);
 			copy.getParentFile().mkdir();
 			copy.createNewFile();
 			copyFile(file,copy);
-			return ("/Users/jesse/Desktop/Assignments/"+ courseID + "/" + AssignID + "." +ext);
+			return ("C:/Users/Jesse/Desktop/Assignments"+ courseID + "/" + AssignID + "." +ext);
 		}
 		else
 			return null;
@@ -56,7 +56,7 @@ public class FileHelper {
 
 	public static String getExtension(String path) {
 
-		String ext[] = path.split("\\.");
+		String ext[] = path.split("/.");
 		return ext[1];
 	}
 

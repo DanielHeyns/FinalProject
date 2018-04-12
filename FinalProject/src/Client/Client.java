@@ -3,19 +3,24 @@ import java.awt.EventQueue;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.sql.SQLException;
+import java.net.Socket;
+import java.net.InetAddress;
 import java.util.ArrayList;
 import objects.*;
 
 public class Client {
 
-public ProfGui profGUI;
-// private ObjectInputStream objIn;
-// private ObjectOutputStream objOut;
+Login loginGUI;
+//public ProfGui profGUI;
+//public StudentGui studentGUI;
+
+ObjectInputStream objIn;
+ObjectOutputStream objOut;
 Course courses[];
 ArrayList<Student> students;
 ArrayList<Assignment> assigns;
-public DBHelper databaseHelper;
-Professor professor;
+User user;
+
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -30,13 +35,34 @@ Professor professor;
 	}
 
 	public Client (){
-	try{
-		databaseHelper = new DBHelper();
-	}catch(SQLException e) { e.printStackTrace(); System.exit(1); }
-		profGUI = new ProfGui(this);
+		try{
+		socket = new Socket(InetAddress.getByName("192.168.0.22"), 6969);
+		objOut = new ObjectOutputStream(socket.getOutputStream());
+		objOut.flush();
+		objIn = new ObjectInputStream(socket.getInputStream());
+	} catch(IOException e){System.out.println("socket IO Error");}
+		loginGUI = new Login(this);
 	}
-	public void setUser(Professor p){
-		professor = p;
+
+	/**
+	 * A func to check if the login info is valid
+	 */
+	public boolean login(int id, String pass){
+		String str;
+		try{
+			objOut.writeObject("Login");
+			objOut.flush();
+			// objOut.writeObject(new Account(id,pass));
+		// 	objOut.flush();
+			str = (String) objIn.readObject();
+		} catch(IOException e){return false;}
+		if(str.equals("Yes")){
+			return true;
+		}else{return false;}
+	}
+
+	/*public void setUser(){
+		user = p;
 		courses = databaseHelper.profCourses(p);
 		assigns = new ArrayList<Assignment>();
 		students = databaseHelper.getStudents();
@@ -46,12 +72,14 @@ Professor professor;
 		}
 		profGUI.displayUser();
 	}
+
 	public void addCourse(Course c){
-		databaseHelper.addCourse(c.getId(), professor.getId(), c.getCourseName());
+		databaseHelper.addCourse(c.getId(), user.getId(), c.getCourseName());
 		for(int i = 0; i<courses.length; i++){
 			if(courses[i] == null){courses[i] = c; break;}
 		}
 	}
+
 	public void activateCourse(int id){
 		databaseHelper.activateCourse(id);
 		for(int i = 0; i<courses.length; i++){
@@ -84,11 +112,12 @@ Professor professor;
 		}
 		profGUI.listener.updateStudents();
 	}
+
 	public void uploadFile(Assignment assign) {
 		assigns.add(assign);
 		profGUI.listener.updateAssigns();
 		databaseHelper.addAssignment(assign.getId(), assign.getCourseID(), assign.getTitle(), assign.getPath(), assign.getDueDate());
-	}
+	}*/
 
 
 
