@@ -1,4 +1,4 @@
-package Client;
+package client;
 
 import java.awt.EventQueue;
 
@@ -6,36 +6,34 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.JComboBox;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JList;
+import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import java.awt.event.*;
 
 public class StudentGUI {
 
-	private JFrame frame;
-	private JTextField tfUser;
-	private JTextField tfName;
-
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					StudentGUI window = new StudentGUI();
-					window.frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+	JFrame frame;
+	JTextField tfUser;
+	JTextField tfName;
+	Client client;
+	DefaultComboBoxModel comboBoxModel;
+	JComboBox comboBox;
+	JList list;
+	DefaultListModel listModel;
+	JButton btnDownload;
+	JButton btnUpload;
+	JButton btnEmail;
+	StudentListener listener;
 
 	/**
 	 * Create the application.
 	 */
-	public StudentGUI() {
+	public StudentGUI(Client c) {
+		listener = new StudentListener(c,this);
+		client = c;
 		initialize();
 	}
 
@@ -68,31 +66,112 @@ public class StudentGUI {
 		frame.getContentPane().add(tfName);
 		tfName.setColumns(10);
 
-		JComboBox comboBox = new JComboBox();
+		comboBoxModel = new DefaultComboBoxModel();
+		comboBox = new JComboBox<String>();
+		comboBox.setModel(comboBoxModel);
 		comboBox.setBounds(96, 160, 338, 26);
+		comboBox.addActionListener(listener);
 		frame.getContentPane().add(comboBox);
 
-		JList list = new JList();
+		listModel = new DefaultListModel<String>();
+		list = new JList<String>(listModel);
 		list.setBounds(96, 225, 338, 203);
 		frame.getContentPane().add(list);
 
-		JButton btnDownload = new JButton("Download");
+		btnDownload = new JButton("Download");
 		btnDownload.setBounds(520, 222, 115, 29);
 		frame.getContentPane().add(btnDownload);
 
-		JButton btnUpload = new JButton("Upload");
+		btnUpload = new JButton("Upload");
 		btnUpload.setBounds(520, 278, 115, 29);
+		btnUpload.addActionListener(listener);
 		frame.getContentPane().add(btnUpload);
 
-		JButton btnEmail = new JButton("Email");
+		btnEmail = new JButton("Email");
 		btnEmail.setBounds(520, 333, 115, 29);
+		btnEmail.addActionListener(listener);
 		frame.getContentPane().add(btnEmail);
-		
+
 		ImageIcon image1 = new ImageIcon(getClass().getResource("simple.jpg"));
 		JLabel imagelabel = new JLabel(image1);
 		imagelabel.setBounds(477, 16, 158, 112);
 		frame.getContentPane().add(imagelabel);
 
+		frame.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                client.closeClient();
+            }
+						@Override
+						public void windowClosed(WindowEvent e) {
+								client.closeClient();
+						}
+        });
+
+		frame.setVisible(true);
+	}
+
+	/**
+	 *	a func to make the Student's data visible
+	 */
+	public void displayUser(){
+		tfUser.setText(client.user.getId() + "");
+		tfName.setText(client.user.getFirstName() + " " +
+												client.user.getLastName());
+		listener.updateCourses();
+		listener.updateAssigns();
+	}
+
+	/**
+	 *	A class to listen to all of the Professor's GUI Components
+	 */
+	public class StudentListener implements ActionListener {
+		private Client client;
+		private StudentGUI sGUI;
+
+		/**
+		 *	ProfListener constructor
+		 */
+	public StudentListener(Client c, StudentGUI s){
+		client = c; sGUI = s;
+	}
+
+	/**
+	 * GUI listening cases
+	 */
+	public void actionPerformed(ActionEvent e) {
+		if (e.getSource() == sGUI.comboBox) {
+			updateAssigns();
+		}
+	}
+
+
+	/**
+	 *
+	 */
+	public void updateAssigns(){
+		sGUI.listModel.removeAllElements();
+		String str[];
+		try{
+		str = ((String) sGUI.comboBox.getSelectedItem()).split(", ");
+		}catch(NullPointerException e) {return;}
+		if(str == null){return;}
+		int id = Integer.parseInt(str[0]);
+		for(int i = 0; i<client.assigns.size(); i++){
+			if(client.assigns.get(i) == null){break;}
+			if(client.assigns.get(i).getCourseID() == id){
+			 sGUI.listModel.addElement(client.assigns.get(i).toString());}
+		}
+	}
+	/**
+	 *
+	 */
+	public void updateCourses(){
+		sGUI.comboBoxModel.removeAllElements();
+		for(int i = 0; i<client.courses.length && client.courses[i] != null; i++){
+			 sGUI.comboBoxModel.addElement(client.courses[i].toString());
+		}
+	}
 
 	}
 }

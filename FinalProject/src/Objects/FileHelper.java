@@ -1,4 +1,3 @@
-
 package objects;
 
 import java.io.BufferedInputStream;
@@ -11,8 +10,6 @@ import java.nio.channels.FileChannel;
 
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
-
-import Objects.Assignment;
 
 public class FileHelper {
 
@@ -99,6 +96,7 @@ public class FileHelper {
 
 			File copy = new File("C:\\Assigns\\" + assign.getCourseID() + "\\" + assign.getId() + "."
 					+ getExtension(file.getAbsolutePath()));
+			// assign.setPath(copy.getAbsolutePath());
 			copy.getParentFile().mkdir();
 			copy.createNewFile();
 			copyFile(file, copy);

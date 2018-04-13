@@ -1,21 +1,31 @@
-package Client;
+package client;
 import java.awt.EventQueue;
+import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.sql.SQLException;
+import java.net.Socket;
+import java.net.InetAddress;
 import java.util.ArrayList;
-import Objects.*;
+import java.net.Socket;
+import java.net.InetAddress;
+import objects.*;
 
 public class Client {
 
+Login loginGUI;
 public ProfGui profGUI;
-// private ObjectInputStream objIn;
-// private ObjectOutputStream objOut;
+public StudentGUI studentGUI;
+
+ObjectInputStream objIn;
+ObjectOutputStream objOut;
+Socket socket;
 Course courses[];
-ArrayList<Student> students;
+ArrayList<User> students;
 ArrayList<Assignment> assigns;
-public DBHelper databaseHelper;
-Professor professor;
+ArrayList<Submission> submissions;
+User user;
+
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -30,30 +40,106 @@ Professor professor;
 	}
 
 	public Client (){
+		try{
+		socket = new Socket(InetAddress.getByName("192.168.0.22"), 6969);
+		objOut = new ObjectOutputStream(socket.getOutputStream());
+		objOut.flush();
+		objIn = new ObjectInputStream(socket.getInputStream());
+	} catch(IOException e){System.out.println("socket IO Error");}
+		loginGUI = new Login(this);
+	}
+
+	/**
+	 * A func to check if the login info is valid
+	 */
+	public boolean login(int id, String pass){
+		String str;
 	try{
-		databaseHelper = new DBHelper();
-	}catch(SQLException e) { e.printStackTrace(); System.exit(1); }
-		profGUI = new ProfGui(this);
+			objOut.writeObject("Login");
+			objOut.writeObject(new Account(id,pass));
+		  objOut.flush();
+			str = (String) objIn.readObject();
+		} catch(IOException e){return false;}
+		catch(ClassNotFoundException e){return false;}
+		if(str.equals("Yes")){
+			setUser();
+			return true;
+		}else{return false;}
 	}
-	public void setUser(Professor p){
-		professor = p;
-		courses = databaseHelper.profCourses(p);
-		assigns = new ArrayList<Assignment>();
-		students = databaseHelper.getStudents();
-		for(int i = 0; i<courses.length; i++){
-			if(courses[i] == null){break;}
-			assigns.addAll(databaseHelper.profAssigns(courses[i].getId()));
-		}
-		profGUI.displayUser();
+
+
+
+	/**
+	 *	A func to "cut-off" communication with the server
+	 */
+	public void closeClient(){
+	if(!socket.isClosed()){
+		try{
+			objOut.writeObject("quit");
+			objOut.flush();
+			objIn.close();
+			objOut.close();
+			socket.close();
+		} catch(IOException e){return;}
 	}
+	}
+
+	/**
+	 *	A func to initialize the user's info
+	 */
+	public void setUser(){
+		try{
+		user = (User) objIn.readObject();
+		if(user.getType() == 't'){ // login info is from a prof
+			profGUI = new ProfGui(this);
+			setProf();}
+		else{ // login info is from a student
+		 studentGUI = new StudentGUI(this);
+		 setStudent();}
+	}catch(IOException e){System.out.println(e.getMessage());}
+	catch(ClassNotFoundException e){System.out.println(e.getMessage());}
+	}
+
+	public void setProf() {
+		try{
+			courses = (Course[]) objIn.readObject();
+			assigns = (ArrayList<Assignment>) objIn.readObject();
+			students = (ArrayList<User>) objIn.readObject();
+			submissions = (ArrayList<Submission>) objIn.readObject();
+			profGUI.displayUser();
+		}catch(IOException e){System.out.println(e.getMessage());}
+		catch(ClassNotFoundException e){System.out.println(e.getMessage());}
+	}
+
+	public void setStudent(){
+		try{
+			courses = (Course[]) objIn.readObject();
+			assigns = (ArrayList<Assignment>) objIn.readObject();
+			submissions = (ArrayList<Submission>) objIn.readObject();
+			studentGUI.displayUser();
+		}catch(IOException e){System.out.println(e.getMessage());}
+		catch(ClassNotFoundException e){System.out.println(e.getMessage());}
+	}
+
 	public void addCourse(Course c){
-		databaseHelper.addCourse(c.getId(), professor.getId(), c.getCourseName());
+	try{
+		objOut.writeObject("NewCourse");
+		objOut.writeObject(c.getId());
+		objOut.writeObject(user.getId());
+		objOut.writeObject(c.getCourseName());
+		objOut.flush();
+	}catch(IOException e){System.out.println(e.getMessage());}
 		for(int i = 0; i<courses.length; i++){
 			if(courses[i] == null){courses[i] = c; break;}
 		}
 	}
+
 	public void activateCourse(int id){
-		databaseHelper.activateCourse(id);
+		try{
+			objOut.writeObject("ActivateC");
+			objOut.writeObject(id);
+			objOut.flush();
+		}catch(IOException e){System.out.println(e.getMessage());}
 		for(int i = 0; i<courses.length; i++){
 			if(courses[i].getId() == id){courses[i].activate(); break;}
 		}
@@ -61,7 +147,11 @@ Professor professor;
 	}
 
 	public void activateAssign(int id){
-		databaseHelper.activateAssign(id);
+		try{
+			objOut.writeObject("ActivateA");
+			objOut.writeObject(id);
+			objOut.flush();
+		}catch(IOException e){System.out.println(e.getMessage());}
 		for(int i = 0; i<assigns.size(); i++){
 			if(assigns.get(i).getId() == id){assigns.get(i).activate(); break;}
 		}
@@ -70,7 +160,12 @@ Professor professor;
 
 
 	public void enrollStudent(int sid,int cid){
-		databaseHelper.addEnrollment(0,sid,cid);
+		try{
+			objOut.writeObject("Enroll");
+			objOut.writeObject(sid);
+			objOut.writeObject(cid);
+			objOut.flush();
+		}catch(IOException e){System.out.println(e.getMessage());}
 		for(int i = 0; i<students.size(); i++){
 			if(students.get(i).getId() == sid){students.get(i).addCourse(cid); break;}
 		}
@@ -78,17 +173,87 @@ Professor professor;
 	}
 
 	public void unenrollStudent(int sid,int cid){
-		databaseHelper.removeEnrollment(sid,cid);
+		try{
+			objOut.writeObject("Unenroll");
+			objOut.writeObject(sid);
+			objOut.writeObject(cid);
+			objOut.flush();
+		}catch(IOException e){System.out.println(e.getMessage());}
 		for(int i = 0; i<students.size(); i++){
 			if(students.get(i).getId() == sid){students.get(i).removeCourse(cid); break;}
 		}
 		profGUI.listener.updateStudents();
 	}
-	public void uploadFile(Assignment assign) {
+
+
+	public void searchStudentID(int id){
+		User student = null;
+		try{
+			objOut.writeObject("StudentSearchID");
+			objOut.writeObject(id);
+			objOut.flush();
+			student = (User) objIn.readObject();
+		}catch(IOException e){System.out.println(e.getMessage());}
+		catch(ClassNotFoundException e){}
+		if(student != null){
+		profGUI.sListModel.removeAllElements();
+		profGUI.sListModel.addElement(student.toString());
+		}
+	}
+
+	public void searchStudentLN(String ln){
+		ArrayList<User> students = null;
+		try{
+			objOut.writeObject("StudentSearchLN");
+			objOut.writeObject(ln);
+			objOut.flush();
+			students = (ArrayList<User>) objIn.readObject();
+		}catch(IOException e){System.out.println(e.getMessage());}
+		catch(ClassNotFoundException e){}
+		if(students != null){
+		profGUI.sListModel.removeAllElements();
+		for(int i = 0; i<students.size(); i++)
+			profGUI.sListModel.addElement(students.get(i).toString());
+		}
+	}
+
+	public void uploadAssign(Assignment assign) {
+		try{
+			objOut.writeObject("UploadA");
+			objOut.writeObject(assign);
+			objOut.flush();
+		}catch(IOException e){System.out.println(e.getMessage());}
 		assigns.add(assign);
 		profGUI.listener.updateAssigns();
-	// instead of sending directly to the database here, we need to use FileHelper.sendFile();
-	//	databaseHelper.addAssignment(assign.getId(), assign.getCourseID(), assign.getTitle(), assign.getPath(), assign.getDueDate());
+	}
+
+	public String profSubmissionString(int aid){
+		for(int i = 0; i<submissions.size(); i++){
+			if(submissions.get(i) == null){return "-- No submition received --";}
+			if(submissions.get(i).getAssignId() == aid){
+				return submissions.get(i).toString();
+			}
+		}
+		return "-- No submition received --";
+	}
+
+	public void gradeSubmission(int sid,int g, String comment){
+		try{
+			objOut.writeObject("Grade");
+			objOut.writeObject(sid);
+			objOut.writeObject(g);
+			objOut.writeObject(comment);
+			objOut.flush();
+		}catch(IOException e){System.out.println(e.getMessage());}
+		for(int i = 0; i<submissions.size(); i++){
+			if(submissions.get(i) == null){break;}
+			if(submissions.get(i).getId() == sid){
+				submissions.get(i).setGrade(g);
+				submissions.get(i).setComments(comment);
+				break;
+			}
+		}
+		profGUI.listener.updateAssigns();
 	}
 
 
