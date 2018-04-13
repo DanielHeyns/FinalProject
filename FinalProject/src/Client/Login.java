@@ -1,6 +1,6 @@
-package Client;
+package client;
 import java.awt.EventQueue;
-
+import java.io.IOException;
 import javax.swing.JOptionPane;
 import javax.swing.JFrame;
 import java.awt.BorderLayout;
@@ -17,7 +17,7 @@ import javax.swing.JButton;
 import javax.swing.JPasswordField;
 import java.awt.event.*;
 import java.awt.event.ActionEvent;
-import Objects.*;
+//import objects.*;
 
 public class Login {
 
@@ -30,15 +30,15 @@ public class Login {
 	/**
 	 * Create the application.
 	 */
-	public Login(Client c, JFrame f) {
-		initialize(c,f);
+	public Login(Client c) {
+		initialize(c);
 		frmLogin.setVisible(true); // show login window at start
 	}
 
 	/**
 	 * Initialize the contents of the frame.
 	 */
-	private void initialize(Client client, JFrame f) {
+	private void initialize(Client client) {
 		frmLogin = new JFrame();
 		frmLogin.setFont(new Font("Wingdings 2", Font.PLAIN, 12));
 		frmLogin.setTitle("Login Window");
@@ -71,7 +71,7 @@ public class Login {
 
 		JLabel lblPassword = new JLabel("Password:\r\n");
 		lblPassword.setFont(new Font("Times New Roman", Font.PLAIN, 20));
-		lblPassword.setBounds(132, 95, 90, 20);
+		lblPassword.setBounds(131, 95, 120, 20);
 		loginP.add(lblPassword);
 
 		//field to receive password
@@ -81,36 +81,49 @@ public class Login {
 		textFieldPass.setColumns(10);
 
 		listener = new LoginListener(client,frmLogin, textFieldID, textFieldPass,
-																	btnLogin, f);
+																	btnLogin);
 		btnLogin.addActionListener(listener);
+
+		frmLogin.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                client.closeClient();
+            }
+						@Override
+						public void windowClosed(WindowEvent e) {
+								client.closeClient();
+						}
+        });
 	}
 
+	// __________________ LoginListener __________________ //
+
+	/**
+	 * A class to listen to the login GUI elements
+	 */
 	public class LoginListener implements ActionListener {
 		private JFrame frame;
 		private Client client;
 		private JTextField idField;
 		private JPasswordField passField;
 		private JButton button;
-		private JFrame profFrame;
 
 	public LoginListener(Client c, JFrame f, JTextField t, JPasswordField p,
-												JButton b, JFrame pf){
-	frame = f; client = c; idField = t; passField = p; button = b; profFrame = pf;
+												JButton b){
+	frame = f; client = c; idField = t; passField = p; button = b;
 	}
+
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == button) {
 			int id = Integer.parseInt(idField.getText().trim());
 			String pass = passField.getText().trim();
-			//System.out.println("id: " + id + "\npass: " + pass);
 			checkLogin(id,pass);
 		}
 	}
 
 	 private void checkLogin(int id, String pass){
-		Professor p = client.databaseHelper.checkLogin(id,pass);
-		if(p != null){
-			profFrame.setVisible(true);
-			client.setUser(p);
+		Boolean check = client.login(id, pass);
+		if(check){
 			frame.setVisible(false);
 		} else {
 			JOptionPane.showMessageDialog(null, "Incorrect ID/Password." +

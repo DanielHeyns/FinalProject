@@ -1,4 +1,4 @@
-package Objects;
+package objects;
 import java.util.ArrayList;
 public class Course implements java.io.Serializable {
 

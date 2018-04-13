@@ -1,4 +1,4 @@
-package Client;
+package client;
 
 import java.awt.EventQueue;
 
@@ -13,32 +13,21 @@ import javax.swing.JButton;
 import javax.swing.JScrollPane;
 
 public class EmailMessageWindow {
-
+	 EmailHelper emailhelper;
 	 JFrame frmSendEmail;
 	 JTextField tfsubject;
 	 JButton btnSend;
-	
+	 JTextArea messageArea;
+	 EmailMessageListener goodlistener;
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					EmailMessageWindow window = new EmailMessageWindow();
-					window.frmSendEmail.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+
 
 	/**
 	 * Create the application.
 	 */
-	public EmailMessageWindow() {
+	public EmailMessageWindow(EmailHelper emailhelper) {
+		this.emailhelper = emailhelper;
+		goodlistener = new EmailMessageListener(this,emailhelper);
 		initialize();
 	}
 
@@ -51,36 +40,42 @@ public class EmailMessageWindow {
 		frmSendEmail.setBounds(100, 100, 743, 531);
 		frmSendEmail.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmSendEmail.getContentPane().setLayout(new BorderLayout(0, 0));
-		
+
 		JPanel TopP = new JPanel();
 		frmSendEmail.getContentPane().add(TopP, BorderLayout.NORTH);
 		TopP.setLayout(new FlowLayout(FlowLayout.LEFT, 5, 5));
-		
-		
+
+
 		JLabel lblSubject = new JLabel("Subject:");
 		TopP.add(lblSubject);
-		
+
 		tfsubject = new JTextField();
 		TopP.add(tfsubject);
 		tfsubject.setColumns(10);
-		
+
 		JPanel messagesendP = new JPanel();
 		frmSendEmail.getContentPane().add(messagesendP, BorderLayout.CENTER);
 		messagesendP.setLayout(null);
-		
+
 		JLabel lblMessage = new JLabel("Message");
 		lblMessage.setBounds(25, 13, 69, 20);
 		messagesendP.add(lblMessage);
-		
+
 		btnSend = new JButton("Send");
 		btnSend.setBounds(575, 394, 115, 29);
 		messagesendP.add(btnSend);
-		
+		btnSend.addActionListener(goodlistener);
+
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(25, 31, 667, 347);
 		messagesendP.add(scrollPane);
-		
-		JTextArea messageArea = new JTextArea();
+
+		messageArea = new JTextArea();
 		scrollPane.setViewportView(messageArea);
+
+		frmSendEmail.setVisible(true);
 	}
+
+
+
 }

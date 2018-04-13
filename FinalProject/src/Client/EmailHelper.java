@@ -1,4 +1,4 @@
-package Client;
+package client;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
@@ -25,10 +25,15 @@ public class EmailHelper {
 	JTextField userT;
 	JTextField passT;
 	JButton loginB;
+	JFrame lgnWindow;
 	EmailMessageWindow messagewindow;
 	String email;
+	Client client;
+	String to;
+	EmailLoginListener gooderlistener = new EmailLoginListener(this);
 
-	public EmailHelper() {
+	public EmailHelper(Client client) {
+		this.client = client;
 		properties = new Properties();
 		properties.put("mail.smtp.starttls.enable", "true"); // Using TLS
 		properties.put("mail.smtp.auth", "true"); // Authenticate
@@ -40,7 +45,7 @@ public class EmailHelper {
 	/**
 	 * creation of the actual session, this will authenticate the password and
 	 * username
-	 * 
+	 *
 	 * @param username
 	 *            is the email of the user
 	 * @param password
@@ -53,13 +58,14 @@ public class EmailHelper {
 				return new PasswordAuthentication(username, password);
 			}
 		});
+		lgnWindow.setVisible(false);
 	}
 
 	/**
 	 * creates the window to login and gain the info needed to create the session
 	 */
 	public void createLoginWindow() {
-		JFrame lgnWindow = new JFrame();
+		lgnWindow = new JFrame();
 		lgnWindow.setTitle("Email Login");
 		lgnWindow.setSize(400, 200);
 		lgnWindow.getContentPane().setLayout(new BorderLayout());
@@ -96,26 +102,24 @@ public class EmailHelper {
 		loginB = new JButton("Login");
 		loginBP.add(loginB);
 		lgnWindow.getContentPane().add(loginBP, BorderLayout.SOUTH);
+		loginB.addActionListener(gooderlistener);
 
 		lgnWindow.setVisible(true);
 	}
 
-	public static void main(String args[]) {
-		EmailHelper emailhelper = new EmailHelper();
-		emailhelper.createLoginWindow();
-	}
 
 	/**
 	 * calls the email message window, where the user can submit the subject and
 	 * message
 	 */
-	public void createMessage() {
-		messagewindow = new EmailMessageWindow();
+	public void createMessage(String str) {
+		messagewindow = new EmailMessageWindow(this);
+		to = str;
 	}
 
 	/**
 	 * the actual procedure of sending the message
-	 * 
+	 *
 	 * @param to
 	 *            is a string containing all desired targets for email in the format
 	 *            "email@gmail.com;nextemail@gmail.com", can append as many emails
@@ -126,7 +130,7 @@ public class EmailHelper {
 	 *            the actual message desired to be sent, taken from the
 	 *            EmailMessageWindow
 	 */
-	public void sendMessage(String to, String sub, String content) {
+	public void sendMessage(String sub, String content) {
 		try {
 			Message message = new MimeMessage(session);
 			message.setFrom(new InternetAddress(email));
