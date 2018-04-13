@@ -40,7 +40,11 @@ public class EmailHelper {
 	/**
 	 * creation of the actual session, this will authenticate the password and
 	 * username
+<<<<<<< HEAD
 	 *
+=======
+	 * 
+>>>>>>> 32a58c261e7bdde756ebcf283c30e47c6e707f3e
 	 * @param username
 	 *            is the email of the user
 	 * @param password
@@ -115,7 +119,11 @@ public class EmailHelper {
 
 	/**
 	 * the actual procedure of sending the message
+<<<<<<< HEAD
 	 *
+=======
+	 * 
+>>>>>>> 32a58c261e7bdde756ebcf283c30e47c6e707f3e
 	 * @param to
 	 *            is a string containing all desired targets for email in the format
 	 *            "email@gmail.com;nextemail@gmail.com", can append as many emails

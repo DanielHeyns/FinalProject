@@ -72,12 +72,20 @@ public class ProfGui {
 	JButton btnUpload;
 	JButton btnActivate;
 	ProfListener listener;
+<<<<<<< HEAD
 	DefaultListModel subListModel;
 	JList<String> subList;
 	JLabel lblSubmissions;
 	JButton btnGrade;
 	JButton btnDownload;
 	JButton btnEmailStu;
+=======
+	private JList slist;
+	private JLabel lblSubmissions;
+	private JButton btnGrade;
+	private JButton btnDownload;
+	private JButton btnEmailStu;
+>>>>>>> 32a58c261e7bdde756ebcf283c30e47c6e707f3e
 
 	/**
 	 * Create the application.
@@ -193,13 +201,17 @@ public class ProfGui {
 		coursesP.add(btnNewCourse);
 
 		btnSetActive = new JButton("Set Active");
-		btnSetActive.setBounds(546, 152, 152, 37);
+		btnSetActive.setBounds(546, 139, 152, 37);
 		btnSetActive.addActionListener(listener);
 		coursesP.add(btnSetActive);
 
 		JLabel lblCourses = new JLabel("Courses:");
 		lblCourses.setBounds(131, 32, 69, 20);
 		coursesP.add(lblCourses);
+		
+		btnEmailStu = new JButton("Email Students");
+		btnEmailStu.setBounds(546, 192, 152, 37);
+		coursesP.add(btnEmailStu);
 
 		//students panel for he center panel
 		JPanel studentsP = new JPanel();
@@ -280,9 +292,25 @@ public class ProfGui {
 		assignP.add(btnUpload);
 
 		btnActivate = new JButton("Activate");
-		btnActivate.setBounds(592, 161, 115, 29);
+		btnActivate.setBounds(592, 148, 115, 29);
 		btnActivate.addActionListener(listener);
 		assignP.add(btnActivate);
+		
+		slist = new JList();
+		slist.setBounds(343, 89, 239, 192);
+		assignP.add(slist);
+		
+		lblSubmissions = new JLabel("Submissions");
+		lblSubmissions.setBounds(343, 50, 120, 20);
+		assignP.add(lblSubmissions);
+		
+		btnGrade = new JButton("Grade");
+		btnGrade.setBounds(592, 193, 115, 29);
+		assignP.add(btnGrade);
+		
+		btnDownload = new JButton("Download");
+		btnDownload.setBounds(592, 238, 115, 29);
+		assignP.add(btnDownload);
 
 		JScrollPane scrollPane = new JScrollPane();
 		subListModel = new DefaultListModel<String>();

@@ -55,6 +55,7 @@ public class EmailMessageWindow {
 		JPanel TopP = new JPanel();
 		frmSendEmail.getContentPane().add(TopP, BorderLayout.NORTH);
 		TopP.setLayout(new FlowLayout(FlowLayout.LEFT, 5, 5));
+<<<<<<< HEAD
 
 
 		JLabel lblSubject = new JLabel("Subject:");
@@ -64,6 +65,17 @@ public class EmailMessageWindow {
 		TopP.add(tfsubject);
 		tfsubject.setColumns(10);
 
+=======
+		
+		
+		JLabel lblSubject = new JLabel("Subject:");
+		TopP.add(lblSubject);
+		
+		tfsubject = new JTextField();
+		TopP.add(tfsubject);
+		tfsubject.setColumns(10);
+		
+>>>>>>> 32a58c261e7bdde756ebcf283c30e47c6e707f3e
 		JPanel messagesendP = new JPanel();
 		frmSendEmail.getContentPane().add(messagesendP, BorderLayout.CENTER);
 		messagesendP.setLayout(null);
