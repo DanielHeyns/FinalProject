@@ -14,10 +14,14 @@ import javax.swing.JFrame;
 public class FileHelper {
 
 	/**
-	 * creates a window that can be interacted with by a user to select a file form their system
-	 * @param frame where the window will be presented
+	 * creates a window that can be interacted with by a user to select a file form
+	 * their system
+	 * 
+	 * @param frame
+	 *            where the window will be presented
 	 * @return the file that the user selected
-	 * @throws IOException when nothing is selected
+	 * @throws IOException
+	 *             when nothing is selected
 	 */
 	public File fileChooserFile(JFrame frame) throws IOException {
 		JFileChooser chooser = new JFileChooser();
@@ -33,11 +37,14 @@ public class FileHelper {
 	private static String getExtension(String path) {
 
 		String ext[] = path.split("\\.");
-		return ext[ext.length -1];
+		return ext[ext.length - 1];
 	}
+
 	/**
 	 * converts a file to a byte array
-	 * @param file to be converted
+	 * 
+	 * @param file
+	 *            to be converted
 	 * @return the byte array with the data from the file
 	 */
 	public byte[] createByteArray(File file) {
@@ -60,8 +67,11 @@ public class FileHelper {
 	}
 
 	/**
-	 * used to save the assignment file provided to the system that this function is called on
-	 * @param assign the assignment to be saved
+	 * used to save the assignment file provided to the system that this function is
+	 * called on
+	 * 
+	 * @param assign
+	 *            the assignment to be saved
 	 */
 	public void saveAssignServer(Assignment assign) {
 		try {
@@ -70,8 +80,8 @@ public class FileHelper {
 			fileOutputStream.write(assign.getByte());
 			fileOutputStream.close();
 
-			File copy = new File("/Users/jesse/Desktop/Server/Assignments/" + assign.getCourseID() + "/" + assign.getId() + "."
-					+ getExtension(assign.getPath()));
+			File copy = new File("/Users/jesse/Desktop/Server/Assignments/" + assign.getCourseID() + "/"
+					+ assign.getId() + "." + getExtension(assign.getPath()));
 			assign.setPath(copy.getAbsolutePath());
 			copy.getParentFile().mkdir();
 			copy.createNewFile();
@@ -88,8 +98,8 @@ public class FileHelper {
 			fileOutputStream.write(sub.getByte());
 			fileOutputStream.close();
 
-			File copy = new File("/Users/jesse/Desktop/Server/Submissions/" + sub.getAssignId() + "/" + sub.getId() + "."
-					+ getExtension(sub.getPath()));
+			File copy = new File("/Users/jesse/Desktop/Server/Submissions/" + sub.getAssignId() + "/" + sub.getId()
+					+ "." + getExtension(sub.getPath()));
 			sub.setPath(copy.getAbsolutePath());
 			copy.getParentFile().mkdir();
 			copy.createNewFile();
@@ -106,8 +116,8 @@ public class FileHelper {
 			fileOutputStream.write(assign.getByte());
 			fileOutputStream.close();
 
-			File copy = new File("/Users/jesse/Desktop/Client/Assignments/" + assign.getCourseID() + "/" + assign.getId() + "."
-					+ getExtension(file.getAbsolutePath()));
+			File copy = new File("/Users/jesse/Desktop/Client/Assignments/" + assign.getCourseID() + "/"
+					+ assign.getId() + "." + getExtension(file.getAbsolutePath()));
 			copy.getParentFile().mkdir();
 			copy.createNewFile();
 			copyFile(file, copy);
@@ -123,8 +133,8 @@ public class FileHelper {
 			fileOutputStream.write(sub.getByte());
 			fileOutputStream.close();
 
-			File copy = new File("/Users/jesse/Desktop/Client/Submissions/" + sub.getAssignId() + "/" + sub.getId() + "."
-					+ getExtension(sub.getPath()));
+			File copy = new File("/Users/jesse/Desktop/Client/Submissions/" + sub.getAssignId() + "/" + sub.getId()
+					+ "." + getExtension(sub.getPath()));
 			sub.setPath(copy.getAbsolutePath());
 			copy.getParentFile().mkdir();
 			copy.createNewFile();
@@ -136,9 +146,13 @@ public class FileHelper {
 
 	/**
 	 * copies the contents of one file to another, overwriting all previous data
-	 * @param sourceFile is the file to be copied
-	 * @param destFile is the file to be copied to
-	 * @throws IOException when the source or destfiles could not be found
+	 * 
+	 * @param sourceFile
+	 *            is the file to be copied
+	 * @param destFile
+	 *            is the file to be copied to
+	 * @throws IOException
+	 *             when the source or destfiles could not be found
 	 */
 	@SuppressWarnings("resource")
 	private static void copyFile(File sourceFile, File destFile) throws IOException {

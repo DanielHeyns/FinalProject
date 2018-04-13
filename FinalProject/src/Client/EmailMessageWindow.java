@@ -13,32 +13,19 @@ import javax.swing.JButton;
 import javax.swing.JScrollPane;
 
 public class EmailMessageWindow {
-
+	 EmailHelper emailhelper;
 	 JFrame frmSendEmail;
 	 JTextField tfsubject;
 	 JButton btnSend;
+	 JTextArea messageArea;
 
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					EmailMessageWindow window = new EmailMessageWindow();
-					window.frmSendEmail.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
 
 	/**
 	 * Create the application.
 	 */
-	public EmailMessageWindow() {
+	public EmailMessageWindow(EmailHelper emailhelper) {
+		this.emailhelper = emailhelper;
 		initialize();
 	}
 
@@ -80,7 +67,7 @@ public class EmailMessageWindow {
 		scrollPane.setBounds(25, 31, 667, 347);
 		messagesendP.add(scrollPane);
 
-		JTextArea messageArea = new JTextArea();
+		messageArea = new JTextArea();
 		scrollPane.setViewportView(messageArea);
 	}
 }

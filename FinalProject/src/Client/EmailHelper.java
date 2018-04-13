@@ -27,8 +27,10 @@ public class EmailHelper {
 	JButton loginB;
 	EmailMessageWindow messagewindow;
 	String email;
+	Client client;
 
-	public EmailHelper() {
+	public EmailHelper(Client client) {
+		this.client = client;
 		properties = new Properties();
 		properties.put("mail.smtp.starttls.enable", "true"); // Using TLS
 		properties.put("mail.smtp.auth", "true"); // Authenticate
@@ -100,17 +102,13 @@ public class EmailHelper {
 		lgnWindow.setVisible(true);
 	}
 
-	public static void main(String args[]) {
-		EmailHelper emailhelper = new EmailHelper();
-		emailhelper.createLoginWindow();
-	}
 
 	/**
 	 * calls the email message window, where the user can submit the subject and
 	 * message
 	 */
 	public void createMessage() {
-		messagewindow = new EmailMessageWindow();
+		messagewindow = new EmailMessageWindow(this);
 	}
 
 	/**
