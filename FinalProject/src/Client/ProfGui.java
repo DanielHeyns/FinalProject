@@ -1,4 +1,9 @@
+<<<<<<< HEAD
 package client;
+=======
+package Client;
+
+>>>>>>> 60774e0f3685951d5c991dd79408a074f2744a45
 import java.awt.EventQueue;
 import java.util.ArrayList;
 
@@ -100,7 +105,11 @@ public class ProfGui {
 		frmCourseWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmCourseWindow.getContentPane().setLayout(new BorderLayout(0, 0));
 
+<<<<<<< HEAD
 		//panel containing the name and id of the user logged in
+=======
+		// panel containing the name and id of the user logged in
+>>>>>>> 60774e0f3685951d5c991dd79408a074f2744a45
 		JPanel topP = new JPanel();
 		frmCourseWindow.getContentPane().add(topP, BorderLayout.NORTH);
 		GridBagLayout gbl_topP = new GridBagLayout();
@@ -274,10 +283,17 @@ public class ProfGui {
 		aList.setBounds(32, 89, 296, 192);
 		assignP.add(aList);
 		aList.addListSelectionListener(new ListSelectionListener() {
+<<<<<<< HEAD
 				@Override
 				public void valueChanged(ListSelectionEvent e){
 					listener.updateSubs();
 				}
+=======
+			@Override
+			public void valueChanged(ListSelectionEvent e) {
+				listener.updateSubs();
+			}
+>>>>>>> 60774e0f3685951d5c991dd79408a074f2744a45
 		});
 
 		btnUpload = new JButton("Upload");
@@ -292,7 +308,11 @@ public class ProfGui {
 
 		JScrollPane scrollPane = new JScrollPane();
 		subListModel = new DefaultListModel<String>();
+<<<<<<< HEAD
 		subList =  new JList<String>(subListModel);
+=======
+		subList = new JList<String>(subListModel);
+>>>>>>> 60774e0f3685951d5c991dd79408a074f2744a45
 		scrollPane.setViewportView(subList);
 		scrollPane.setBounds(343, 89, 239, 192);
 		assignP.add(scrollPane);
@@ -312,6 +332,7 @@ public class ProfGui {
 		assignP.add(btnDownload);
 
 		frmCourseWindow.addWindowListener(new WindowAdapter() {
+<<<<<<< HEAD
             @Override
             public void windowClosing(WindowEvent e) {
                 client.closeClient();
@@ -321,30 +342,56 @@ public class ProfGui {
 								client.closeClient();
 						}
         });
+=======
+			@Override
+			public void windowClosing(WindowEvent e) {
+				client.closeClient();
+			}
+
+			@Override
+			public void windowClosed(WindowEvent e) {
+				client.closeClient();
+			}
+		});
+>>>>>>> 60774e0f3685951d5c991dd79408a074f2744a45
 
 		frmCourseWindow.setVisible(true);
 	}
 
 	/**
+<<<<<<< HEAD
 	 *	a func to make the Prof's data visible
 	 */
 	public void displayUser(){
 		textField_1.setText(client.user.getId() + "");
 		textField.setText(client.user.getFirstName() + " " +
 												client.user.getLastName());
+=======
+	 * a func to make the Prof's data visible
+	 */
+	public void displayUser() {
+		textField_1.setText(client.user.getId() + "");
+		textField.setText(client.user.getFirstName() + " " + client.user.getLastName());
+>>>>>>> 60774e0f3685951d5c991dd79408a074f2744a45
 		listener.updateCourses();
 		listener.updateAssigns();
 	}
 
+<<<<<<< HEAD
 
 	/**
 	 *	A class to listen to all of the Professor's GUI Components
+=======
+	/**
+	 * A class to listen to all of the Professor's GUI Components
+>>>>>>> 60774e0f3685951d5c991dd79408a074f2744a45
 	 */
 	public class ProfListener implements ActionListener {
 		private Client client;
 		private ProfGui profGUI;
 
 		/**
+<<<<<<< HEAD
 		 *	ProfListener constructor
 		 */
 	public ProfListener(Client c, ProfGui p){
@@ -389,6 +436,122 @@ public class ProfGui {
 		}
 		if(e.getSource() == profGUI.rdbtnAll){
 			updateStudents();
+=======
+		 * ProfListener constructor
+		 */
+		public ProfListener(Client c, ProfGui p) {
+			client = c;
+			profGUI = p;
+		}
+
+		/**
+		 * GUI listening cases
+		 */
+		public void actionPerformed(ActionEvent e) {
+			if (e.getSource() == profGUI.btnGoToStu) {
+				CardLayout cardLayout = (CardLayout) profGUI.centerP.getLayout();
+				cardLayout.show(profGUI.centerP, "Students");
+			}
+			if (e.getSource() == profGUI.btnGoToCur) {
+				CardLayout cardLayout = (CardLayout) profGUI.centerP.getLayout();
+				cardLayout.show(profGUI.centerP, "Courses");
+			}
+			if (e.getSource() == profGUI.btnGoToAssign) {
+				CardLayout cardLayout = (CardLayout) profGUI.centerP.getLayout();
+				cardLayout.show(profGUI.centerP, "Assignments");
+			}
+			if (e.getSource() == profGUI.btnNewCourse) { // add new course
+				if (client.courses[4] != null) { // if full load, stop
+					JOptionPane.showMessageDialog(null, "You have a full course load.", "Unable to add Course",
+							JOptionPane.PLAIN_MESSAGE);
+				} else {
+					addNewCourse();
+				} // else continue
+			}
+			if (e.getSource() == profGUI.btnActivate) {
+				activateAssign();
+			}
+			if (e.getSource() == profGUI.btnSetActive) {
+				activateCourse();
+			}
+			if (e.getSource() == profGUI.comboBox_1) {
+				// update assigns for selection
+				updateAssigns();
+			}
+			if (e.getSource() == profGUI.comboBox) {
+				// update students for selection
+				updateStudents();
+			}
+			if (e.getSource() == profGUI.rdbtnAll) {
+				updateStudents();
+			}
+			if (e.getSource() == profGUI.rdbtnInCourse) {
+				updateStudents();
+			}
+			if (e.getSource() == profGUI.btnEnroll) {
+				enrollStudent();
+			}
+			if (e.getSource() == profGUI.btnUnenroll) {
+				unenrollStudent();
+			}
+			if (e.getSource() == profGUI.btnUpload) {
+				uploadFile();
+			}
+			if (e.getSource() == profGUI.btnSearch) {
+				searchStudents();
+			}
+			if (e.getSource() == profGUI.btnGrade) {
+				gradeSubmission();
+			}
+			if (e.getSource() == profGUI.btnDownload) {
+				try {
+					downloadSub();
+				} catch (ClassNotFoundException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			}
+		}
+
+		public void downloadSub() throws ClassNotFoundException {
+			String str[];
+			try {
+				str = profGUI.subList.getSelectedValue().split(" ");
+			} catch (NullPointerException e) {
+				return;
+			}
+			if (str == null) {
+				return;
+			}
+			int sid = Integer.parseInt(str[0]);
+			client.downloadSub(sid);
+		}
+
+		/**
+		 *
+		 */
+		public void enrollStudent() {
+			String str[];
+			try {
+				str = profGUI.sList.getSelectedValue().split(", ");
+			} catch (NullPointerException e) {
+				return;
+			}
+			if (str == null) {
+				return;
+			}
+			int sid = Integer.parseInt(str[0]);
+			try {
+				str = ((String) profGUI.comboBox.getSelectedItem()).split(", ");
+			} catch (NullPointerException e) {
+				return;
+			}
+			if (str == null) {
+				return;
+			}
+			int cid = Integer.parseInt(str[0]);
+			client.enrollStudent(sid, cid);
+>>>>>>> 60774e0f3685951d5c991dd79408a074f2744a45
 		}
 		if(e.getSource() == profGUI.rdbtnInCourse){
 			updateStudents();
@@ -416,6 +579,7 @@ public class ProfGui {
 		}
 	}
 
+<<<<<<< HEAD
 	public void downloadSub(){
 		String str[];
 		try{
@@ -454,12 +618,58 @@ public class ProfGui {
 		String input = JOptionPane.showInputDialog("Please Enter the grade as a percent:");
 		while(!isInteger(input)){
 			input = JOptionPane.showInputDialog("Please Enter the grade as a percent:");
+=======
+		public void gradeSubmission() {
+			String str[];
+			try {
+				str = profGUI.subList.getSelectedValue().split(" ");
+			} catch (NullPointerException e) {
+				return;
+			}
+			if (str == null) {
+				return;
+			}
+			int cid = Integer.parseInt(str[0]);
+			String input = JOptionPane.showInputDialog("Please Enter the grade as a percent:");
+			while (!isInteger(input)) {
+				input = JOptionPane.showInputDialog("Please Enter the grade as a percent:");
+			}
+			String input2 = JOptionPane.showInputDialog("Please Enter any comments:");
+			client.gradeSubmission(cid, Integer.parseInt(input), input2);
+		}
+
+		/**
+		 *
+		 */
+		public void unenrollStudent() {
+			String str[];
+			try {
+				str = profGUI.sList.getSelectedValue().split(", ");
+			} catch (NullPointerException e) {
+				return;
+			}
+			if (str == null) {
+				return;
+			}
+			int sid = Integer.parseInt(str[0]);
+			try {
+				str = ((String) profGUI.comboBox.getSelectedItem()).split(", ");
+			} catch (NullPointerException e) {
+				return;
+			}
+			if (str == null) {
+				return;
+			}
+			int cid = Integer.parseInt(str[0]);
+			client.unenrollStudent(sid, cid);
+>>>>>>> 60774e0f3685951d5c991dd79408a074f2744a45
 		}
 		String input2 = JOptionPane.showInputDialog("Please Enter any comments:");
 		client.gradeSubmission(cid, Integer.parseInt(input),input2);
 	}
 
 
+<<<<<<< HEAD
 	/**
 	 *
 	 */
@@ -485,12 +695,24 @@ public class ProfGui {
 			String input = JOptionPane.showInputDialog("Please Enter a LastName or StudentID");
 			if(input == null || input.equals("")){return;} // if no input, don't search
 			if(isInteger(input)) {
+=======
+		/**
+		 *
+		 */
+		public void searchStudents() {
+			String input = JOptionPane.showInputDialog("Please Enter a LastName or StudentID");
+			if (input == null || input.equals("")) {
+				return;
+			} // if no input, don't search
+			if (isInteger(input)) {
+>>>>>>> 60774e0f3685951d5c991dd79408a074f2744a45
 				client.searchStudentID(Integer.parseInt(input));
 			} else {
 				client.searchStudentLN(input);
 			}
 		}
 
+<<<<<<< HEAD
 
 		/**
 		 *gets a file from the user and sends it to the client to be sent over a socket to the server.
@@ -517,6 +739,52 @@ public class ProfGui {
 		}
 
 		public void emailCourse(){
+=======
+		/**
+		 * gets a file from the user and sends it to the client to be sent over a socket
+		 * to the server.
+		 */
+		public void uploadFile() {
+			try {
+				String coursename = (String) profGUI.comboBox_1.getSelectedItem();
+				String stuff[] = coursename.split(", ");
+				String assignID = JOptionPane.showInputDialog("Please Enter Assignment ID"); // Receives assignment id,
+																								// title and duedate
+				String assigntitle = JOptionPane.showInputDialog("Please Enter Assignment Title");
+				String assignDue = JOptionPane.showInputDialog("Please Enter Assignment DueDate");
+				FileHelper filehelp = new FileHelper(); // initializes FileHelper
+				File file = filehelp.fileChooserFile(frmCourseWindow);
+				byte[] content = filehelp.createByteArray(file);// uses two functions from filehelper to get the
+																// specified file
+																// from the user and converts the file to a byte array
+				try {
+					Assignment assignment = new Assignment(Integer.parseInt(assignID), Integer.parseInt(stuff[0]), // creates
+																													// an
+																													// assignment
+																													// class
+																													// with
+																													// the
+																													// previously
+																													// gained
+																													// info
+							assigntitle, false, file.getAbsolutePath(), assignDue);
+					assignment.setByte(content); // adds the byte array to the assignment
+					client.uploadAssign(assignment); // sends the assignment with the byte array to the client to be
+														// sent
+				} catch (NumberFormatException e1) {
+					e1.printStackTrace();
+				}
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			return;
+		}
+
+		/**
+		 *
+		 */
+		public void activateCourse() {
+>>>>>>> 60774e0f3685951d5c991dd79408a074f2744a45
 			String str[];
 			try{
 			str = profGUI.cList.getSelectedValue().split(", ");
@@ -529,6 +797,7 @@ public class ProfGui {
 		/**
 		 *
 		 */
+<<<<<<< HEAD
 	public void activateCourse(){
 		String str[];
 		try{
@@ -569,9 +838,48 @@ public class ProfGui {
 			client.addCourse(c);
 			updateCourses();
 			break;
+=======
+		public void activateAssign() {
+			String str[];
+			try {
+				str = profGUI.aList.getSelectedValue().split(", ");
+			} catch (NullPointerException e) {
+				return;
+			}
+			if (str == null) {
+				return;
+			}
+			int id = Integer.parseInt(str[0]);
+			client.activateAssign(id);
+		}
+
+		/**
+		 *
+		 */
+		public void addNewCourse() {
+			while (true) {
+				String name = JOptionPane.showInputDialog("Course Name: ");
+				if (name == null) {
+					break;
+				}
+				String id = JOptionPane.showInputDialog("Course ID: ");
+				if (id == null || !isInteger(id)) {
+					break;
+				}
+				int i = Integer.parseInt(id);
+
+				Course c = new Course(i, name, client.user.getId(), client.user.getLastName(), false,
+						new ArrayList<Integer>());
+				// (int i, String cn, int pi, String pn, boolean a, ArrayList<Integer> arr)
+				client.addCourse(c);
+				updateCourses();
+				break;
+			}
+>>>>>>> 60774e0f3685951d5c991dd79408a074f2744a45
 		}
 	}
 
+<<<<<<< HEAD
 	/**
 	 * A simple func to determine if a String can be seen as a integer
 	 */
@@ -603,9 +911,24 @@ public class ProfGui {
 			 aListModel.addElement(client.assigns.get(i).toString());
 			 subListModel.addElement(client.profSubmissionString(client.assigns.get(i).getId()));
 		 }
+=======
+		/**
+		 * A simple func to determine if a String can be seen as a integer
+		 */
+		public boolean isInteger(String s) {
+			try {
+				Integer.parseInt(s);
+			} catch (NumberFormatException e) {
+				return false;
+			} catch (NullPointerException e) {
+				return false;
+			}
+			return true;
+>>>>>>> 60774e0f3685951d5c991dd79408a074f2744a45
 		}
 	}
 
+<<<<<<< HEAD
 
 	public void updateSubs(){
 		profGUI.subListModel.removeAllElements();
@@ -617,10 +940,33 @@ public class ProfGui {
 			for(int i = 0; i<client.submissions.size() ; i++){
 				if(client.submissions.get(i).getAssignId() == aid){
 				subListModel.addElement(client.submissions.get(i).toString());
+=======
+		/**
+		 *
+		 */
+		public void updateAssigns() {
+			profGUI.aListModel.removeAllElements();
+			profGUI.subListModel.removeAllElements();
+			String str[];
+			try {
+				str = ((String) profGUI.comboBox_1.getSelectedItem()).split(", ");
+			} catch (NullPointerException e) {
+				return;
+			}
+			if (str == null) {
+				return;
+			}
+			int id = Integer.parseInt(str[0]);
+			for (int i = 0; i < client.assigns.size(); i++) {
+				if (client.assigns.get(i).getCourseID() == id) {
+					aListModel.addElement(client.assigns.get(i).toString());
+					subListModel.addElement(client.profSubmissionString(client.assigns.get(i).getId()));
+>>>>>>> 60774e0f3685951d5c991dd79408a074f2744a45
 				}
 			}
 		}
 
+<<<<<<< HEAD
 /**
  *
  */
@@ -640,10 +986,53 @@ public class ProfGui {
 			for(int i = 0; i<client.students.size(); i++){
 				if(client.students.get(i).inCourse(id))
 				 profGUI.sListModel.addElement(client.students.get(i).toString());
+=======
+		public void updateSubs() {
+			profGUI.subListModel.removeAllElements();
+			String str[];
+			try {
+				str = profGUI.aList.getSelectedValue().split(", ");
+			} catch (NullPointerException e) {
+				return;
+			}
+			int aid = Integer.parseInt(str[0]);
+			for (int i = 0; i < client.submissions.size(); i++) {
+				if (client.submissions.get(i).getAssignId() == aid) {
+					subListModel.addElement(client.submissions.get(i).toString());
+				}
+			}
+		}
+
+		/**
+		 *
+		 */
+		public void updateStudents() {
+			profGUI.sListModel.removeAllElements();
+			if (profGUI.rdbtnAll.isSelected()) {
+				for (int i = 0; i < client.students.size(); i++) {
+					profGUI.sListModel.addElement(client.students.get(i).toString());
+				}
+			} else {
+				String str[];
+				try {
+					str = ((String) profGUI.comboBox.getSelectedItem()).split(", ");
+				} catch (NullPointerException e) {
+					return;
+				}
+				if (str == null) {
+					return;
+				}
+				int id = Integer.parseInt(str[0]);
+				for (int i = 0; i < client.students.size(); i++) {
+					if (client.students.get(i).inCourse(id))
+						profGUI.sListModel.addElement(client.students.get(i).toString());
+				}
+>>>>>>> 60774e0f3685951d5c991dd79408a074f2744a45
 			}
 		}
 	}
 
+<<<<<<< HEAD
 	/**
 	 *
 	 */
@@ -655,6 +1044,20 @@ public class ProfGui {
 			 cListModel.addElement(client.courses[i].toString());
 			 profGUI.comboBoxModel.addElement(client.courses[i].toString());
 			 profGUI.comboBoxModel_1.addElement(client.courses[i].toString());
+=======
+		/**
+		 *
+		 */
+		public void updateCourses() {
+			profGUI.cListModel.removeAllElements();
+			profGUI.comboBoxModel.removeAllElements();
+			profGUI.comboBoxModel_1.removeAllElements();
+			for (int i = 0; i < client.courses.length && client.courses[i] != null; i++) {
+				cListModel.addElement(client.courses[i].toString());
+				profGUI.comboBoxModel.addElement(client.courses[i].toString());
+				profGUI.comboBoxModel_1.addElement(client.courses[i].toString());
+			}
+>>>>>>> 60774e0f3685951d5c991dd79408a074f2744a45
 		}
 	}
 	}

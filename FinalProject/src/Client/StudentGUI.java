@@ -143,6 +143,7 @@ public class StudentGUI {
 		if (e.getSource() == sGUI.comboBox) {
 			updateAssigns();
 		}
+<<<<<<< HEAD
 		if (e.getSource() == sGUI.btnDownload) {
 			download();
 		}
@@ -196,6 +197,10 @@ public class StudentGUI {
 	}catch(IOException e){e.printStackTrace();}
 		return;
 	}
+=======
+	}
+
+>>>>>>> 60774e0f3685951d5c991dd79408a074f2744a45
 
 	/**
 	 *
@@ -211,6 +216,7 @@ public class StudentGUI {
 		for(int i = 0; i<client.assigns.size(); i++){
 			if(client.assigns.get(i) == null){break;}
 			if(client.assigns.get(i).getCourseID() == id){
+<<<<<<< HEAD
 			 sGUI.listModel.addElement(client.assigns.get(i).toString());
 			 addSub(client.assigns.get(i).getAssignId());
 		 }
@@ -229,6 +235,11 @@ public class StudentGUI {
 			return;
 		}
 
+=======
+			 sGUI.listModel.addElement(client.assigns.get(i).toString());}
+		}
+	}
+>>>>>>> 60774e0f3685951d5c991dd79408a074f2744a45
 	/**
 	 *
 	 */

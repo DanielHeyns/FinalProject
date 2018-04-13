@@ -1,5 +1,10 @@
+<<<<<<< HEAD
 package server;
 import objects.*;
+=======
+package Server;
+import Objects.*;
+>>>>>>> 60774e0f3685951d5c991dd79408a074f2744a45
 import java.io.*;
 import java.io.File;
 import java.util.ArrayList;
@@ -79,8 +84,16 @@ public class Worker implements Runnable{
 			case "ActivateA":
 				activateAssign();
 				break;
+<<<<<<< HEAD
 			case "getProfEmail":
 				profEmail();
+=======
+			case "EmailC":
+				emailCourse();
+				break;
+			case "Email":
+				email();
+>>>>>>> 60774e0f3685951d5c991dd79408a074f2744a45
 				break;
 			case "Grade":
 				gradeAssign();
@@ -260,12 +273,21 @@ public class Worker implements Runnable{
 		catch(ClassNotFoundException e){System.out.println(e.getMessage());}
 	}
 
+<<<<<<< HEAD
 	public void	profEmail(){
 		try{
 			int sid = (int) objIn.readObject();
 			objOut.writeObject(databaseHelper.getProfEmail(sid));
 			objOut.flush();
 		}
+=======
+	public void	emailCourse(){
+System.out.println("emailCourse");
+	}
+
+	public void	email(){
+System.out.println("email");
+>>>>>>> 60774e0f3685951d5c991dd79408a074f2744a45
 	}
 
 	public void	gradeAssign(){
@@ -279,6 +301,7 @@ public class Worker implements Runnable{
 	}
 
 	public void	uploadSub(){
+<<<<<<< HEAD
 		try{
 			Submission sub = (Submission) objIn.readObject();
 			filehelper.saveSubmissionServer(sub);
@@ -288,6 +311,10 @@ public class Worker implements Runnable{
 		catch(ClassNotFoundException e){System.out.println(e.getMessage());}
 	}
 
+=======
+
+	}
+>>>>>>> 60774e0f3685951d5c991dd79408a074f2744a45
 	public void	downloadSub(){
 		try{
 			int sid = (int) objIn.readObject();
@@ -299,6 +326,7 @@ public class Worker implements Runnable{
 		}catch(IOException e){System.out.println(e.getMessage());}
 		catch(ClassNotFoundException e){System.out.println(e.getMessage());}
 	}
+<<<<<<< HEAD
 	public void	downloadAssign(){ // fix for Assign
 		try{
 			int aid = (int) objIn.readObject();
@@ -309,6 +337,10 @@ public class Worker implements Runnable{
 			objOut.flush();
 		}catch(IOException e){System.out.println(e.getMessage());}
 		catch(ClassNotFoundException e){System.out.println(e.getMessage());}
+=======
+	public void	downloadAssign(){
+
+>>>>>>> 60774e0f3685951d5c991dd79408a074f2744a45
 	}
 
 

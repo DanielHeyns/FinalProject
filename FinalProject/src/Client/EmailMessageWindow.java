@@ -18,7 +18,11 @@ public class EmailMessageWindow {
 	 JTextField tfsubject;
 	 JButton btnSend;
 	 JTextArea messageArea;
+<<<<<<< HEAD
 	 EmailMessageListener goodlistener;
+=======
+	 EmailMessageListener goodlistener = new EmailMessageListener(this);
+>>>>>>> 60774e0f3685951d5c991dd79408a074f2744a45
 
 
 
@@ -27,7 +31,10 @@ public class EmailMessageWindow {
 	 */
 	public EmailMessageWindow(EmailHelper emailhelper) {
 		this.emailhelper = emailhelper;
+<<<<<<< HEAD
 		goodlistener = new EmailMessageListener(this,emailhelper);
+=======
+>>>>>>> 60774e0f3685951d5c991dd79408a074f2744a45
 		initialize();
 	}
 

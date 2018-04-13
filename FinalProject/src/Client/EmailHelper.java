@@ -29,8 +29,12 @@ public class EmailHelper {
 	EmailMessageWindow messagewindow;
 	String email;
 	Client client;
+<<<<<<< HEAD
 	String to;
 	EmailLoginListener gooderlistener = new EmailLoginListener(this);
+=======
+	LoginListener gooderlistener = new LoginListener(this);
+>>>>>>> 60774e0f3685951d5c991dd79408a074f2744a45
 
 	public EmailHelper(Client client) {
 		this.client = client;
@@ -112,9 +116,14 @@ public class EmailHelper {
 	 * calls the email message window, where the user can submit the subject and
 	 * message
 	 */
+<<<<<<< HEAD
 	public void createMessage(String str) {
 		messagewindow = new EmailMessageWindow(this);
 		to = str;
+=======
+	public void createMessage() {
+		messagewindow = new EmailMessageWindow(this);
+>>>>>>> 60774e0f3685951d5c991dd79408a074f2744a45
 	}
 
 	/**
