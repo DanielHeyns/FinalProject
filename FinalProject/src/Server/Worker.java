@@ -1,5 +1,5 @@
-package server;
-import objects.*;
+package Server;
+import Objects.*;
 import java.io.*;
 import java.util.ArrayList;
 import java.sql.SQLException;

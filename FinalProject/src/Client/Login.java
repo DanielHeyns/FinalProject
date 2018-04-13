@@ -1,4 +1,4 @@
-package client;
+package Client;
 import java.awt.EventQueue;
 import java.io.IOException;
 import javax.swing.JOptionPane;
@@ -12,12 +12,10 @@ import java.awt.GridBagLayout;
 import javax.swing.JLabel;
 import java.awt.GridBagConstraints;
 import javax.swing.JTextField;
-import java.awt.Insets;
 import javax.swing.JButton;
 import javax.swing.JPasswordField;
 import java.awt.event.*;
 import java.awt.event.ActionEvent;
-//import objects.*;
 
 public class Login {
 

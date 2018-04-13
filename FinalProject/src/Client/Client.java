@@ -1,4 +1,4 @@
-package client;
+package Client;
 import java.awt.EventQueue;
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -9,7 +9,7 @@ import java.net.InetAddress;
 import java.util.ArrayList;
 import java.net.Socket;
 import java.net.InetAddress;
-import objects.*;
+import Objects.*;
 
 public class Client {
 

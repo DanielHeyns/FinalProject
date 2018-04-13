@@ -1,4 +1,4 @@
-package client;
+package Client;
 import java.awt.EventQueue;
 import java.util.ArrayList;
 
@@ -35,7 +35,7 @@ import javax.swing.JRadioButton;
 import java.awt.event.*;
 import java.awt.event.ActionEvent;
 
-import objects.*;
+import Objects.*;
 
 public class ProfGui {
 
@@ -72,20 +72,13 @@ public class ProfGui {
 	JButton btnUpload;
 	JButton btnActivate;
 	ProfListener listener;
-<<<<<<< HEAD
+
 	DefaultListModel subListModel;
 	JList<String> subList;
 	JLabel lblSubmissions;
 	JButton btnGrade;
 	JButton btnDownload;
 	JButton btnEmailStu;
-=======
-	private JList slist;
-	private JLabel lblSubmissions;
-	private JButton btnGrade;
-	private JButton btnDownload;
-	private JButton btnEmailStu;
->>>>>>> 32a58c261e7bdde756ebcf283c30e47c6e707f3e
 
 	/**
 	 * Create the application.
@@ -296,9 +289,9 @@ public class ProfGui {
 		btnActivate.addActionListener(listener);
 		assignP.add(btnActivate);
 		
-		slist = new JList();
-		slist.setBounds(343, 89, 239, 192);
-		assignP.add(slist);
+		sList = new JList();
+		sList.setBounds(343, 89, 239, 192);
+		assignP.add(sList);
 		
 		lblSubmissions = new JLabel("Submissions");
 		lblSubmissions.setBounds(343, 50, 120, 20);
