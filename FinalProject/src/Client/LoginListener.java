@@ -11,6 +11,9 @@ public class LoginListener implements ActionListener {
 	}
 
 	public void actionPerformed(ActionEvent arg0) {
+		/**
+		 * this should call the createSession in EmailHelper
+		 */
 		if (arg0.getSource() == loginwindow.loginB) {
 
 		}

@@ -10,7 +10,9 @@ public class EmailMessageListener implements ActionListener {
 		this.msgwindow = msgwindow;
 	}
 
-	@Override
+	/**
+	 * this should call sendMessage in the EmailHelper class
+	 */
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == msgwindow.btnSend) {
 
