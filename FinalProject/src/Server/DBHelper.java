@@ -333,6 +333,25 @@ public class DBHelper {
 	}
 
 
+	public Submission getSubmission(int sid){
+		String sql = "SELECT * FROM submissiontable WHERE id = " + sid;
+		ResultSet data;
+		try {
+			statement = jdbc_connection.createStatement();
+			data = statement.executeQuery(sql);
+			// table (id, password, email, firstName, lastName, type)
+			// ctor User(int i,String p, String e, String f, String l,char t)
+			if(data.next())
+			{ // (int i, int ai, int si, String t, String p, String ts, int g, String c)
+				return new Submission(data.getInt("id"), data.getInt("assignID"), data.getInt("studentID"),
+				data.getString("title"), data.getString("path"), data.getString("timestamp"),
+				data.getInt("submissionGrade"), data.getString("comments"));
+			}
+		} catch (SQLException e) { e.printStackTrace(); }
+		return null;
+	}
+
+
 	public void addSubmission(int id, int aid, int sid, String path, String title, int grade, String comment,
 			String timestamp) {
 		String sql = "INSERT INTO submissiontable (id, assignID, studentID, path, title, submissionGrade, comments, timestamp) VALUES ('"

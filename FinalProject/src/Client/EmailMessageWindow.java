@@ -64,7 +64,6 @@ public class EmailMessageWindow {
 		TopP.add(tfsubject);
 		tfsubject.setColumns(10);
 
-
 		JPanel messagesendP = new JPanel();
 		frmSendEmail.getContentPane().add(messagesendP, BorderLayout.CENTER);
 		messagesendP.setLayout(null);

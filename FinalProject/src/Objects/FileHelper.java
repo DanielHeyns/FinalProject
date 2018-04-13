@@ -29,35 +29,11 @@ public class FileHelper {
 		}
 		return null;
 	}
-	/**
-	 * copies the contents of one file to another, overwriting all previous data
-	 * @param sourceFile is the file to be copied
-	 * @param destFile is the file to be copied to
-	 * @throws IOException when the source or destfiles could not be found
-	 */
-	@SuppressWarnings("resource")
-	private static void copyFile(File sourceFile, File destFile) throws IOException {
-		FileChannel source = null;
-		FileChannel destination = null;
-
-		try {
-			source = new FileInputStream(sourceFile).getChannel();
-			destination = new FileOutputStream(destFile).getChannel();
-			destination.transferFrom(source, 0, source.size());
-		} finally {
-			if (source != null) {
-				source.close();
-			}
-			if (destination != null) {
-				destination.close();
-			}
-		}
-	}
 
 	private static String getExtension(String path) {
 
 		String ext[] = path.split("\\.");
-		return ext[1];
+		return ext[ext.length -1];
 	}
 	/**
 	 * converts a file to a byte array
@@ -87,21 +63,99 @@ public class FileHelper {
 	 * used to save the assignment file provided to the system that this function is called on
 	 * @param assign the assignment to be saved
 	 */
-	public void saveAssign(Assignment assign) {
+	public void saveAssignServer(Assignment assign) {
 		try {
 			File file = new File(assign.getTitle());
 			FileOutputStream fileOutputStream = new FileOutputStream(file);
 			fileOutputStream.write(assign.getByte());
 			fileOutputStream.close();
 
-			File copy = new File("C:\\Assigns\\" + assign.getCourseID() + "\\" + assign.getId() + "."
-					+ getExtension(file.getAbsolutePath()));
-			// assign.setPath(copy.getAbsolutePath());
+			File copy = new File("/Users/jesse/Desktop/Server/Assignments/" + assign.getCourseID() + "/" + assign.getId() + "."
+					+ getExtension(assign.getPath()));
+			assign.setPath(copy.getAbsolutePath());
 			copy.getParentFile().mkdir();
 			copy.createNewFile();
 			copyFile(file, copy);
 		} catch (IOException e) {
 			e.printStackTrace();
+		}
+	}
+
+	public void saveSubmissionServer(Submission sub) {
+		try {
+			File file = new File(sub.getTitle());
+			FileOutputStream fileOutputStream = new FileOutputStream(file);
+			fileOutputStream.write(sub.getByte());
+			fileOutputStream.close();
+
+			File copy = new File("/Users/jesse/Desktop/Server/Submissions/" + sub.getAssignId() + "/" + sub.getId() + "."
+					+ getExtension(sub.getPath()));
+			sub.setPath(copy.getAbsolutePath());
+			copy.getParentFile().mkdir();
+			copy.createNewFile();
+			copyFile(file, copy);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void saveAssignClient(Assignment assign) {
+		try {
+			File file = new File(assign.getTitle());
+			FileOutputStream fileOutputStream = new FileOutputStream(file);
+			fileOutputStream.write(assign.getByte());
+			fileOutputStream.close();
+
+			File copy = new File("/Users/jesse/Desktop/Client/Assignments/" + assign.getCourseID() + "/" + assign.getId() + "."
+					+ getExtension(file.getAbsolutePath()));
+			copy.getParentFile().mkdir();
+			copy.createNewFile();
+			copyFile(file, copy);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void saveSubmissionClient(Submission sub) {
+		try {
+			File file = new File(sub.getTitle());
+			FileOutputStream fileOutputStream = new FileOutputStream(file);
+			fileOutputStream.write(sub.getByte());
+			fileOutputStream.close();
+
+			File copy = new File("/Users/jesse/Desktop/Client/Submissions/" + sub.getAssignId() + "/" + sub.getId() + "."
+					+ getExtension(sub.getPath()));
+			sub.setPath(copy.getAbsolutePath());
+			copy.getParentFile().mkdir();
+			copy.createNewFile();
+			copyFile(file, copy);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	/**
+	 * copies the contents of one file to another, overwriting all previous data
+	 * @param sourceFile is the file to be copied
+	 * @param destFile is the file to be copied to
+	 * @throws IOException when the source or destfiles could not be found
+	 */
+	@SuppressWarnings("resource")
+	private static void copyFile(File sourceFile, File destFile) throws IOException {
+		FileChannel source = null;
+		FileChannel destination = null;
+
+		try {
+			source = new FileInputStream(sourceFile).getChannel();
+			destination = new FileOutputStream(destFile).getChannel();
+			destination.transferFrom(source, 0, source.size());
+		} finally {
+			if (source != null) {
+				source.close();
+			}
+			if (destination != null) {
+				destination.close();
+			}
 		}
 	}
 

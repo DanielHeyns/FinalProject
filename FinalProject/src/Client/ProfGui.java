@@ -14,9 +14,10 @@ import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.ButtonGroup;
-import java.io.IOException;
 import javax.swing.JScrollPane;
 import javax.swing.event.*;
+import java.io.File;
+import java.io.IOException;
 
 import java.awt.CardLayout;
 import javax.swing.SwingConstants;
@@ -35,7 +36,7 @@ import javax.swing.JRadioButton;
 import java.awt.event.*;
 import java.awt.event.ActionEvent;
 
-import Objects.*;
+import objects.*;
 
 public class ProfGui {
 
@@ -72,7 +73,6 @@ public class ProfGui {
 	JButton btnUpload;
 	JButton btnActivate;
 	ProfListener listener;
-
 	DefaultListModel subListModel;
 	JList<String> subList;
 	JLabel lblSubmissions;
@@ -194,17 +194,13 @@ public class ProfGui {
 		coursesP.add(btnNewCourse);
 
 		btnSetActive = new JButton("Set Active");
-		btnSetActive.setBounds(546, 139, 152, 37);
+		btnSetActive.setBounds(546, 152, 152, 37);
 		btnSetActive.addActionListener(listener);
 		coursesP.add(btnSetActive);
 
 		JLabel lblCourses = new JLabel("Courses:");
 		lblCourses.setBounds(131, 32, 69, 20);
 		coursesP.add(lblCourses);
-		
-		btnEmailStu = new JButton("Email Students");
-		btnEmailStu.setBounds(546, 192, 152, 37);
-		coursesP.add(btnEmailStu);
 
 		//students panel for he center panel
 		JPanel studentsP = new JPanel();
@@ -285,25 +281,9 @@ public class ProfGui {
 		assignP.add(btnUpload);
 
 		btnActivate = new JButton("Activate");
-		btnActivate.setBounds(592, 148, 115, 29);
+		btnActivate.setBounds(592, 161, 115, 29);
 		btnActivate.addActionListener(listener);
 		assignP.add(btnActivate);
-		
-		sList = new JList();
-		sList.setBounds(343, 89, 239, 192);
-		assignP.add(sList);
-		
-		lblSubmissions = new JLabel("Submissions");
-		lblSubmissions.setBounds(343, 50, 120, 20);
-		assignP.add(lblSubmissions);
-		
-		btnGrade = new JButton("Grade");
-		btnGrade.setBounds(592, 193, 115, 29);
-		assignP.add(btnGrade);
-		
-		btnDownload = new JButton("Download");
-		btnDownload.setBounds(592, 238, 115, 29);
-		assignP.add(btnDownload);
 
 		JScrollPane scrollPane = new JScrollPane();
 		subListModel = new DefaultListModel<String>();
@@ -423,6 +403,19 @@ public class ProfGui {
 		if (e.getSource() == profGUI.btnGrade) {
 			gradeSubmission();
 		}
+		if (e.getSource() == profGUI.btnDownload) {
+			downloadSub();
+		}
+	}
+
+	public void downloadSub(){
+		String str[];
+		try{
+		str = profGUI.subList.getSelectedValue().split(" ");
+		}catch(NullPointerException e){return;}
+		if(str == null){return;}
+		int sid = Integer.parseInt(str[0]);
+		client.downloadSub(sid);
 	}
 
 	/**
@@ -501,12 +494,13 @@ public class ProfGui {
 			String assignID = JOptionPane.showInputDialog("Please Enter Assignment ID");		//Receives assignment id, title and duedate
 			String assigntitle = JOptionPane.showInputDialog("Please Enter Assignment Title");
 			String assignDue = JOptionPane.showInputDialog("Please Enter Assignment DueDate");
-			FileHelper filehelp = new FileHelper();												//initializes FileHelper
-			byte[] content = filehelp.createByteArray(filehelp.fileChooserFile(frmCourseWindow));//uses two functions from filehelper to get the specified file
+			FileHelper filehelp = new FileHelper();			//initializes FileHelper
+			File file = filehelp.fileChooserFile(frmCourseWindow);
+			byte[] content = filehelp.createByteArray(file);//uses two functions from filehelper to get the specified file
 																								//from the user and converts the file to a byte array
 			try {
 				Assignment assignment = new Assignment(Integer.parseInt(assignID), Integer.parseInt(stuff[0]), //creates an assignment class with the previously gained info
-						assigntitle, false, null, assignDue);
+						assigntitle, false, file.getAbsolutePath(), assignDue);
 				assignment.setByte(content);													// adds the byte array to the assignment
 				client.uploadAssign(assignment);													// sends the assignment with the byte array to the client to be sent
 			} catch (NumberFormatException e1) {e1.printStackTrace();}

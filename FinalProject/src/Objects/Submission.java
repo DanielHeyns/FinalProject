@@ -59,6 +59,7 @@ public class Submission implements java.io.Serializable {
   public void setPath(String i){path = i;}
   public void setComments(String c){comments = c;}
   public void setGrade(int i){grade = i;}
+  public void setByte(byte f[]){filebytes = f;}
   // timestamps the submission
   public void stamp(){
     timestamp = new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(new java.util.Date());

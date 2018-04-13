@@ -9,7 +9,8 @@ import java.net.InetAddress;
 import java.util.ArrayList;
 import java.net.Socket;
 import java.net.InetAddress;
-import Objects.*;
+import java.io.*;
+import objects.*;
 
 public class Client {
 
@@ -41,7 +42,7 @@ User user;
 
 	public Client (){
 		try{
-		socket = new Socket(InetAddress.getByName("192.168.0.22"), 6969);
+		socket = new Socket(InetAddress.getByName("10.12.182.67"), 6969);
 		objOut = new ObjectOutputStream(socket.getOutputStream());
 		objOut.flush();
 		objIn = new ObjectInputStream(socket.getInputStream());
@@ -256,6 +257,15 @@ User user;
 		profGUI.listener.updateAssigns();
 	}
 
-
+	public void downloadSub(int sid){
+		try{
+			objOut.writeObject("DownloadS");
+			objOut.writeObject(sid);
+			objOut.flush();
+			FileHelper filehelper = new FileHelper();
+			Submission s = (Submission) objIn.readObject();
+			filehelper.saveSubmissionClient(s);
+		}catch(IOException e){System.out.println(e.getMessage());}
+	}
 
 }

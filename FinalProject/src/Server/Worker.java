@@ -1,6 +1,7 @@
 package Server;
 import Objects.*;
 import java.io.*;
+import java.io.File;
 import java.util.ArrayList;
 import java.sql.SQLException;
 import java.net.Socket;
@@ -226,14 +227,10 @@ public class Worker implements Runnable{
 	}
 
 	public void uploadAssign(){
-		System.out.println("upload assign called");
 		try{
 			Assignment assign = (Assignment) objIn.readObject();
-			System.out.println("read assign");
-			filehelper.saveAssign(assign);
-			System.out.println("saved assign");
+			filehelper.saveAssignServer(assign);
 			databaseHelper.addAssignment(assign.getId(), assign.getCourseID(), assign.getTitle(), assign.getPath(), assign.getDueDate());
-			System.out.println("added assign to DB");
 		}catch(IOException e){System.out.println(e.getMessage());}
 		catch(ClassNotFoundException e){System.out.println(e.getMessage());}
 	}
@@ -288,7 +285,15 @@ System.out.println("email");
 
 	}
 	public void	downloadSub(){
-
+		try{
+			int sid = (int) objIn.readObject();
+			Submission sub = databaseHelper.getSubmission(sid);
+			byte[] content = filehelper.createByteArray(new File(sub.getPath()));
+			sub.setByte(content);
+			objOut.writeObject(sub);
+			objOut.flush();
+		}catch(IOException e){System.out.println(e.getMessage());}
+		catch(ClassNotFoundException e){System.out.println(e.getMessage());}
 	}
 	public void	downloadAssign(){
 
