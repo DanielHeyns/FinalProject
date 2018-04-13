@@ -18,6 +18,7 @@ public class EmailMessageWindow {
 	 JTextField tfsubject;
 	 JButton btnSend;
 	 JTextArea messageArea;
+	 EmailMessageListener goodlistener = new EmailMessageListener(this);
 
 
 
@@ -62,6 +63,7 @@ public class EmailMessageWindow {
 		btnSend = new JButton("Send");
 		btnSend.setBounds(575, 394, 115, 29);
 		messagesendP.add(btnSend);
+		btnSend.addActionListener(goodlistener);
 
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(25, 31, 667, 347);

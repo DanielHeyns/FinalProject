@@ -28,6 +28,7 @@ public class EmailHelper {
 	EmailMessageWindow messagewindow;
 	String email;
 	Client client;
+	LoginListener gooderlistener = new LoginListener(this);
 
 	public EmailHelper(Client client) {
 		this.client = client;
@@ -98,6 +99,7 @@ public class EmailHelper {
 		loginB = new JButton("Login");
 		loginBP.add(loginB);
 		lgnWindow.getContentPane().add(loginBP, BorderLayout.SOUTH);
+		loginB.addActionListener(gooderlistener);
 
 		lgnWindow.setVisible(true);
 	}
